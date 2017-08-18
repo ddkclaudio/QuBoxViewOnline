@@ -1,15 +1,21 @@
+
+
 <!-- Simple header with scrollable tabs. -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-      <span class="mdl-layout-title">Estudos do Book - <%= @day %></span>
+      <span id="day" class="mdl-layout-title">Estudos do Book - <%= @day %></span>
     </div>
     <!-- Tabs -->
     <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         
     <% for i in 2..10 %>
-      <a href="#scroll-tab-<%= i %>" class="mdl-layout__tab"><%= i %> tick</a>
+      <% if i == 2%>
+          <a href="#scroll-tab-<%= i %>" class="mdl-layout__tab is-active" onclick="tab_ticks(<%= i %>)"><%= i %> tick</a>
+      <% else %>
+          <a href="#scroll-tab-<%= i %>" class="mdl-layout__tab"  onclick="tab_ticks(<%= i %>)"><%= i %> tick</a>
+      <% end %>
     <% end %>
     
     
@@ -33,12 +39,12 @@
   </div>
   <main class="mdl-layout__content">
     <section class="mdl-layout__tab-panel is-active" id="scroll-tab-2">
-      <div class="page-content"><%= render :partial => "ticks", locals: {tick:  @data['2']} %></div>
+      <div class="page-content"><%= render :partial => "ticks", locals: {tick:  @data['2'], i: 2} %></div>
     </section>
     
     <% for i in 3..10 %>
     <section class="mdl-layout__tab-panel" id="scroll-tab-<%= i %>">
-      <div class="page-content"><%= render :partial => "ticks", locals: {tick: @data["#{i}"]}%></div>
+      <div class="page-content"><%= render :partial => "ticks", locals: {tick: @data["#{i}"], i: i     }%></div>
     </section>
     <% end %>
   

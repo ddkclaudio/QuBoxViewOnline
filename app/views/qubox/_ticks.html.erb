@@ -1,5 +1,5 @@
 <% if !tick['less50'].blank? or !tick['more50'].blank? %>
-<div class="mdl-grid demo-content">
+<div id='<%= i %>_ticks' class="mdl-grid demo-content">
    
    <!-- Total --->
    <h5 class="mdl-cell mdl-cell--12-col box">Sobre a ocorrência</h5>
@@ -13,31 +13,33 @@
       </thead>
       <tbody>
          <tr>
-            <td class='border'><%= tick['less50'].length %></td>
-            <td class='border'><%= tick['more50'].length %></td>
-            <td class='border'><%= tick['less50'].length + tick['more50'].length %></td>
+            <td class='border' id='less50' ><%= tick['less50'].length %></td>
+            <td class='border' id='more50' ><%= tick['more50'].length %></td>
+            <td class='border' id='lessmore' ><%= tick['less50'].length + tick['more50'].length %></td>
          </tr>
       </tbody>
    </table>
   
    <!--SELECT-->
    <div class="mdl-color--white  mdl-cell mdl-cell--12-col mdl-grid">
-      <select name="select" class="mdl-shadow--2dp">
+      <select name="select" class="mdl-shadow--2dp"  onchange="select_occ(this.value)">
          <option value="" disabled selected>ADD < 50 </option>
          
          <% for occ in tick['less50']%>
          <% occ = occ['informacoes']['start_time'] %>
-            <option value="hurr"><%= occ %></option>
+            <option value="<%= occ %>"><%= occ %></option>
+         <% end %>
+         
+         
+          <option value="" disabled selected>ADD >= 50</option>
+         <% for occ in tick['more50']%>
+         <% occ = occ['informacoes']['start_time'] %>
+            <option value="<%= occ %>"><%= occ %></option>
          <% end %>
          
       </select>
-      <select name="select" class="mdl-shadow--2dp">
-         <option value="" disabled selected>ADD >= 50</option>
-         <% for occ in tick['more50']%>
-         <% occ = occ['informacoes']['start_time'] %>
-            <option value="hurr"><%= occ %></option>
-         <% end %>
-      </select>
+      
+      
    </div>
    
    <% if !tick['more50'].blank? %>
