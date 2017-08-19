@@ -13,9 +13,9 @@
       </thead>
       <tbody>
          <tr>
-            <td class='border' id='less50' ><%= tick['less50'].length %></td>
-            <td class='border' id='more50' ><%= tick['more50'].length %></td>
-            <td class='border' id='lessmore' ><%= tick['less50'].length + tick['more50'].length %></td>
+            <td class='border'><%= tick['less50'].length %></td>
+            <td class='border'><%= tick['more50'].length %></td>
+            <td class='border'><%= tick['less50'].length + tick['more50'].length %></td>
          </tr>
       </tbody>
    </table>
@@ -61,7 +61,9 @@
    </div>
    <!--Spread Zerado-->
    <h5 class="mdl-cell mdl-cell--12-col box">Spread Zerado:</h5>
+   <div id='segundos_nao'>
    <%= render :partial => "spreadzerado" %>
+   </div>
    
    <!--Spread Zerado + 3 Segundos-->
    <h5 class="mdl-cell mdl-cell--12-col box" >Spread Zerado + 3 Segundos:</h5>
@@ -74,14 +76,15 @@
       </thead>
       <tbody>
          <tr>
-            <td class='border'>1</td>
-            <td class='border'>0.5</td>
+            <td id='frequencia_max'  class='border'> xxxx </td>
+            <td id='frequencia_min' class='border' > xxxx </td>
          </tr>
       </tbody>
    </table>
    <h5 class="mdl-cell mdl-cell--12-col" style="margin:15px"> </h5>
-   <%= render :partial => "spreadzerado" %>
-  
+   <div id='segundos_sim'>
+      <%= render :partial => "spreadzerado" %>
+   </div>
    
    <!--Resultados estatísticos-->
    <h5 class="mdl-cell mdl-cell--12-col box">Resultados estatísticos</h5>

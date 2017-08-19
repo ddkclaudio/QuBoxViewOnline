@@ -1,46 +1,88 @@
 <% for i in 1..7%>
 <table class="mdl-data-table  mdl-data-table--selectable mdl-shadow--2dp mdl-cell mdl-cell--3-col">
    <thead>
-      <tr alt='1º snapshot: No momento em que houve o ADD'>
-         <th colspan="4" class='border'> 1º snapshot: Momento do ADD</th>
+
+      <% if i == 1 %>
+      <tr>
+         <th colspan="4" class='border'>1º: No momento em que houve o ADD</th>
       </tr>
+      <% end %>
+
+      <% if i == 2 %>
+      <tr>
+         <th colspan="4" class='border'>2º: Spread zerado 1ª linha</th>
+      </tr>
+      <% end %>
+
+      <% if i == 3 %>
+      <tr>
+         <th colspan="4" class='border'>3º: Spread zerado ultima linha</th>
+      </tr>
+      <% end %>
+
+      <% if i == 4 %>
+      <tr>
+         <th colspan="4" class='border'>4º: Spread zerado +1</th>
+      </tr>
+      <% end %>
+
+      <% if i == 5 %>
+      <tr>
+         <th colspan="4" class='border'>5º: Spread zerado +2</th>
+      </tr>
+      <% end %>
+
+      <% if i == 6 %>
+      <tr>
+         <th colspan="4" class='border'>6º: Spread zerado +3</th>
+      </tr>
+      <% end %>
+
+      <% if i == 7 %>
+      <tr>
+         <th colspan="4" class='border'>7º: Quando houve dell no qadd</th>
+      </tr>
+      <% end %>
+
+
+
    </thead>
    <tbody>
       <tr>
-         <td class='border'>140</td>
-         <td class='border' style=" background: #ff8508; ">160</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
+         <td id='snap_<%= i %>_00' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_01' class='border' style=" background: #ff8508; ">xxxx</td>
+         <td id='snap_<%= i %>_02' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_03' class='border'>xxxx</td>
       </tr>
       <tr>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
+         <td id='snap_<%= i %>_10' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_11' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_12' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_13' class='border'>xxxx</td>
       </tr>
       <tr>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
+         <td id='snap_<%= i %>_20' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_21' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_22' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_23' class='border'>xxxx</td>
       </tr>
       <tr>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
+         <td id='snap_<%= i %>_30' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_31' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_32' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_33' class='border'>xxxx</td>
       </tr>
       <tr>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
-         <td class='border'>100</td>
+         <td id='snap_<%= i %>_40' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_41' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_42' class='border'>xxxx</td>
+         <td id='snap_<%= i %>_43' class='border'>xxxx</td>
       </tr>
       <tr>
-         <td class='border' style="background: #ceffce;" >500</td>
+         <td id='snap_<%= i %>_50' class='border' style="background: #ceffce;" >xxxx</td>
          <td style="background: #ceffce;" ></td>
          <td style="background: #ceffce;" ></td>
-         <td class='border' style="background: #ceffce;" >500</td>
+         <td id='snap_<%= i %>_53' class='border' style="background: #ceffce;" >xxxx</td>
       </tr>
    </tbody>
 </table>
