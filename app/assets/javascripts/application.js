@@ -25,20 +25,25 @@ var occs = new Object(); // or just {}
 
 // UPDATE
 function informacoes() {
-    $("#"+ticks+"_ticks #start_time").html( occ['informacoes']['start_time'].replace("000",""));
+    $("#"+ticks+"_ticks #start_time").html( occ['informacoes']['start_time'].replace("000","").replace("T"," "));
     $("#"+ticks+"_ticks #paddi").html( occ['informacoes']['paddi']);
     $("#"+ticks+"_ticks #qadd").html( occ['informacoes']['qadd']);
     $("#"+ticks+"_ticks #side").html( occ['informacoes']['side']);
     $("#"+ticks+"_ticks #padds").html( occ['informacoes']['padds']);
     $("#"+ticks+"_ticks #qadds").html( occ['informacoes']['qadds']);
+    puts("----")
+    puts(occ['informacoes']['qadds'])
+    
+    
+    
     $("#"+ticks+"_ticks #paddf").html( occ['informacoes']['paddf']);
     $("#"+ticks+"_ticks #x").html( occ['informacoes']['x']);
     $("#"+ticks+"_ticks #paddw").html( occ['informacoes']['paddw']);
     $("#"+ticks+"_ticks #qaddw").html( occ['informacoes']['qaddw']);
     $("#"+ticks+"_ticks #paddsw").html( occ['informacoes']['paddsw']);
     $("#"+ticks+"_ticks #qaddsw").html( occ['informacoes']['qaddsw']);
-    $("#"+ticks+"_ticks #end_time").html( occ['informacoes']['end_time'].replace("000",""));
-    $("#"+ticks+"_ticks #vwap").html( occ['informacoes']['vwap']);
+    $("#"+ticks+"_ticks #end_time").html( occ['informacoes']['end_time'].replace("000","").replace("T"," "));
+    $("#"+ticks+"_ticks #vwap").html( occ['informacoes']['vwap'][0]);
 }
 function disp_risk() {
     $("#"+ticks+"_ticks #disp_00 ").html(occ['disponivel'][0]['price']);
@@ -153,16 +158,13 @@ $.getJSON("https://qubox-ddkclaudio.c9users.io/to_json.json", function(json) {
     day = $("#day").html().replace("Estudos do Book - ","");
     find_occ();
 });
-
 function tab_ticks(arg){
     ticks = arg;
 }
-
 function select_occ(arg){
     occ = occs[arg+""];
     update();
 }
-
 function find_occ() {
     var local_occ;
     
