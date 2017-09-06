@@ -36,3 +36,13 @@ th.border{
 td.border{
      border-style: inset
 }
+#disp_risk{
+    display: inherit;
+}
+
+.active_side{
+     background: #ff8508; 
+}
+.centralize{
+text-align: center;
+}
