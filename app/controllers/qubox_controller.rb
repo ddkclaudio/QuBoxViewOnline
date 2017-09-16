@@ -34,7 +34,7 @@ class QuboxController < ApplicationController
     end
     
     def get_json
-      @JSON_TXT = File.read("#{Rails.public_path}/data_json.json")
+      @JSON_TXT = File.read("#{Rails.public_path}/data_json_lu.json")
       @JSON = JSON.parse(@JSON_TXT)  
       get_days
     end

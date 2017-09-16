@@ -62,7 +62,7 @@
    <!--Spread Zerado-->
    <h5 class="mdl-cell mdl-cell--12-col box">Spread Zerado:</h5>
    <div id='segundos_nao'>
-   <%= render :partial => "spreadzerado" %>
+   <%= render :partial => "spreadzerado" ,locals:{disp: 1}%>
    </div>
    
    <!--Spread Zerado + 3 Segundos-->
@@ -83,10 +83,10 @@
    </table>
    <h5 class="mdl-cell mdl-cell--12-col" style="margin:15px"> </h5>
    <div id='segundos_sim'>
-      <%= render :partial => "spreadzerado" %>
+      <%= render :partial => "spreadzerado" ,locals:{disp: 2}%>
    </div>
    
-   <div id="remotion_chart_<%= i %>" style="width: 900px; height: 500px;margin-left: -100px;"></div>
+   <div id="remotion_chart_<%= i %>" style="width: 200%; height: 500px;margin-left: -100px;"></div>
    
    <!--Resultados estatísticos-->
    <h5 class="mdl-cell mdl-cell--12-col box">Resultados estatísticos</h5>
