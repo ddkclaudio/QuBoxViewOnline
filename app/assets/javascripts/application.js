@@ -224,8 +224,8 @@ function spreadZeradoGeral(segundos, local,side) {
     $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddsw ").html(qaddsw_dc);
     $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddsw ").html(qaddsw_dccanc - qaddsw_dc);
     $("#" + ticks + "_ticks #" + segundos + " #sz_adicionado_qaddsw ").html(qaddsw_add);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddsw ").html( ((qaddsw_dccanc*100) / (qaddsw+ qaddsw_add)).toFixed(2) );
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddsw ").html( ((qaddsw_dc*100) / (qaddsw + qaddsw_add) ).toFixed(2) );
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddsw ").html( qaddsw_dccanc );
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddsw ").html( qaddsw_dc );
     
     if (occ[local]['paddsw']['teria_lucro'])
         $("#" + ticks + "_ticks #" + segundos + " #sz_teria_lucro ").html("Sim");
@@ -353,10 +353,10 @@ function contra_ou_afavor(viewap) {
 }
 
 function cem_porcento(argument) {
-    var qaddw = occ['Spread_zerado']['paddw']['qaddw'];
-    var qaddw_dc = occ['Spread_zerado']['paddw']['qaddw_dc'];
-    var percent = (qaddw_dc * 100) / qaddw
-    return percent;
+    // var qaddw = occ['Spread_zerado']['paddw']['qaddw'];
+    // var qaddw_dc = argument;
+    // var percent = ((qaddw_dc * 100) / qaddw).toFixed(2);
+    return argument;
 }
 
 function table_of_analisys() {
@@ -482,6 +482,7 @@ function update() {
     spreadZeradoGeral('segundos_nao', 'Spread_zerado',1);
     spreadZerado3Segundos();
     drawChart();
+    drawChart_rps();
 }
 
 function getLabel(arg) {
@@ -531,6 +532,56 @@ function drawChart() {
 
     // Create and draw the visualization.
     new google.visualization.LineChart(document.getElementById('remotion_chart_' + ticks)).
+    draw(data, {
+        // curveType: 'function',
+
+        vAxis: {
+            maxValue: 10,
+            fontSize: 13, // or the number you want
+            title: 'temps (ms)',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+                // max: max(occ['informacoes']['qadd'], occ['informacoes']['qaddw']),
+            }
+        },
+        hAxis: {
+            textStyle: {
+                fontSize: 13 // or the number you want
+            },
+        },
+        annotations: {
+            style: 'line'
+        }
+    });
+}
+
+function drawChart_rps() {
+    // Create and populate the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'x');
+    data.addColumn({
+        type: 'string',
+        role: 'annotation'
+    });
+    data.addColumn({
+        type: 'string',
+        role: 'annotationText'
+    });
+    data.addColumn('number', 'Rps');
+    data.addColumn('number', 'Saldo acumulado');
+
+    for (var i = 0; i < occ['snap_shots']['chart_2'].length; i++) {
+        if (occ['snap_shots']['chart_2'][i]['name'] != "snap_7") {
+            var name = getLabel(occ['snap_shots']['chart_2'][i]['name']);
+            var rps_all = occ['snap_shots']['chart_2'][i]['rps_all'];
+            var saldo_acumudado = occ['snap_shots']['chart_2'][i]['saldo_acumudado'];
+            // var qaddsw_restante = occ['snap_shots']['chart_1'][i]['qaddsw_dell'];
+            data.addRow([name, '', '', rps_all, saldo_acumudado]);
+        }
+    }
+
+    // Create and draw the visualization.
+    new google.visualization.LineChart(document.getElementById('rps_chart_' + ticks)).
     draw(data, {
         // curveType: 'function',
 
