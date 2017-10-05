@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005165537) do
+ActiveRecord::Schema.define(version: 20171005170621) do
 
   create_table "infos", force: :cascade do |t|
     t.integer  "index"
@@ -47,6 +47,59 @@ ActiveRecord::Schema.define(version: 20171005165537) do
     t.integer  "snap_7"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+  end
+
+  create_table "mbps", force: :cascade do |t|
+    t.float    "bid_price_0"
+    t.integer  "bid_quantity_0"
+    t.float    "ask_price_0"
+    t.integer  "ask_quantity_0"
+    t.float    "bid_price_1"
+    t.integer  "bid_quantity_1"
+    t.float    "ask_price_1"
+    t.integer  "ask_quantity_1"
+    t.float    "bid_price_2"
+    t.integer  "bid_quantity_2"
+    t.float    "ask_price_2"
+    t.integer  "ask_quantity_2"
+    t.float    "bid_price_3"
+    t.integer  "bid_quantity_3"
+    t.float    "ask_price_3"
+    t.integer  "ask_quantity_3"
+    t.float    "bid_price_4"
+    t.integer  "bid_quantity_4"
+    t.float    "ask_price_4"
+    t.integer  "ask_quantity_4"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "snapshots", force: :cascade do |t|
+    t.integer  "number_of_snapshot"
+    t.integer  "qaddw_dell"
+    t.integer  "qaddw_change"
+    t.integer  "qaddw_add"
+    t.integer  "qaddw_cancel"
+    t.integer  "qaddsw_dell"
+    t.integer  "qaddsw_change"
+    t.integer  "qaddsw_add"
+    t.integer  "qaddsw_cancel"
+    t.integer  "qadd_dell"
+    t.integer  "qadd_change"
+    t.integer  "qadd_add"
+    t.integer  "qadd_cancel"
+    t.float    "vwap"
+    t.float    "rps"
+    t.text     "frequencia"
+    t.integer  "tinha_buraco"
+    t.float    "acumulado"
+    t.integer  "delete_no_add"
+    t.integer  "teve_iceberg"
+    t.integer  "teve_add_secundario"
+    t.float    "preco"
+    t.text     "ofi"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "users", force: :cascade do |t|

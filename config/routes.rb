@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :mbps
+  resources :snapshots
   resources :snapshots
   resources :snapshots
   resources :infos
