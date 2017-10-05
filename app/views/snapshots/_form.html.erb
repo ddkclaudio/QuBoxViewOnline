@@ -1,0 +1,113 @@
+<%= form_for(@snapshot) do |f| %>
+  <% if @snapshot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@snapshot.errors.count, "error") %> prohibited this snapshot from being saved:</h2>
+
+      <ul>
+      <% @snapshot.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :number_of_snapshot %><br>
+    <%= f.number_field :number_of_snapshot %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddw_dell %><br>
+    <%= f.number_field :qaddw_dell %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddw_change %><br>
+    <%= f.number_field :qaddw_change %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddw_add %><br>
+    <%= f.number_field :qaddw_add %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddw_cancel %><br>
+    <%= f.number_field :qaddw_cancel %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddsw_dell %><br>
+    <%= f.number_field :qaddsw_dell %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddsw_change %><br>
+    <%= f.number_field :qaddsw_change %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddsw_add %><br>
+    <%= f.number_field :qaddsw_add %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddsw_cancel %><br>
+    <%= f.number_field :qaddsw_cancel %>
+  </div>
+  <div class="field">
+    <%= f.label :qadd_dell %><br>
+    <%= f.number_field :qadd_dell %>
+  </div>
+  <div class="field">
+    <%= f.label :qadd_change %><br>
+    <%= f.number_field :qadd_change %>
+  </div>
+  <div class="field">
+    <%= f.label :qadd_add %><br>
+    <%= f.number_field :qadd_add %>
+  </div>
+  <div class="field">
+    <%= f.label :qadd_cancel %><br>
+    <%= f.number_field :qadd_cancel %>
+  </div>
+  <div class="field">
+    <%= f.label :vwap %><br>
+    <%= f.text_field :vwap %>
+  </div>
+  <div class="field">
+    <%= f.label :rps %><br>
+    <%= f.text_field :rps %>
+  </div>
+  <div class="field">
+    <%= f.label :frequencia %><br>
+    <%= f.text_area :frequencia %>
+  </div>
+  <div class="field">
+    <%= f.label :tinha_buraco %><br>
+    <%= f.number_field :tinha_buraco %>
+  </div>
+  <div class="field">
+    <%= f.label :acumulado %><br>
+    <%= f.text_field :acumulado %>
+  </div>
+  <div class="field">
+    <%= f.label :delete_no_add %><br>
+    <%= f.number_field :delete_no_add %>
+  </div>
+  <div class="field">
+    <%= f.label :teve_iceberg %><br>
+    <%= f.number_field :teve_iceberg %>
+  </div>
+  <div class="field">
+    <%= f.label :teve_add_secundario %><br>
+    <%= f.number_field :teve_add_secundario %>
+  </div>
+  <div class="field">
+    <%= f.label :preco %><br>
+    <%= f.text_field :preco %>
+  </div>
+  <div class="field">
+    <%= f.label :ofi %><br>
+    <%= f.text_area :ofi %>
+  </div>
+  <div class="field">
+    <%= f.label :mbp %><br>
+    <%= f.number_field :mbp %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

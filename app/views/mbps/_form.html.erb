@@ -1,0 +1,97 @@
+<%= form_for(@mbp) do |f| %>
+  <% if @mbp.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@mbp.errors.count, "error") %> prohibited this mbp from being saved:</h2>
+
+      <ul>
+      <% @mbp.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :bid_price_0 %><br>
+    <%= f.text_field :bid_price_0 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_quantity_0 %><br>
+    <%= f.number_field :bid_quantity_0 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_price_0 %><br>
+    <%= f.text_field :ask_price_0 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_quantity_0 %><br>
+    <%= f.number_field :ask_quantity_0 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_price_1 %><br>
+    <%= f.text_field :bid_price_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_quantity_1 %><br>
+    <%= f.number_field :bid_quantity_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_price_1 %><br>
+    <%= f.text_field :ask_price_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_quantity_1 %><br>
+    <%= f.number_field :ask_quantity_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_price_2 %><br>
+    <%= f.text_field :bid_price_2 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_quantity_2 %><br>
+    <%= f.number_field :bid_quantity_2 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_price_2 %><br>
+    <%= f.text_field :ask_price_2 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_quantity_2 %><br>
+    <%= f.number_field :ask_quantity_2 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_price_3 %><br>
+    <%= f.text_field :bid_price_3 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_quantity_3 %><br>
+    <%= f.number_field :bid_quantity_3 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_price_3 %><br>
+    <%= f.text_field :ask_price_3 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_quantity_3 %><br>
+    <%= f.number_field :ask_quantity_3 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_price_4 %><br>
+    <%= f.text_field :bid_price_4 %>
+  </div>
+  <div class="field">
+    <%= f.label :bid_quantity_4 %><br>
+    <%= f.number_field :bid_quantity_4 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_price_4 %><br>
+    <%= f.text_field :ask_price_4 %>
+  </div>
+  <div class="field">
+    <%= f.label :ask_quantity_4 %><br>
+    <%= f.number_field :ask_quantity_4 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

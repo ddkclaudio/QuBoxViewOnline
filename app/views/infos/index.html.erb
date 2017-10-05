@@ -1,0 +1,87 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Infos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>Start time</th>
+      <th>Paddi</th>
+      <th>Qadd</th>
+      <th>Side</th>
+      <th>Padds</th>
+      <th>Qadds</th>
+      <th>Paddf</th>
+      <th>X</th>
+      <th>Paddw</th>
+      <th>Qaddw</th>
+      <th>Paddsw</th>
+      <th>Qaddsw</th>
+      <th>End time</th>
+      <th>Paddw calculo</th>
+      <th>Paddw financeiro</th>
+      <th>Paddsw lucro</th>
+      <th>Paddw calculo plus</th>
+      <th>Paddw financeiro plus</th>
+      <th>Paddsw lucro plus</th>
+      <th>Disponivel</th>
+      <th>Risco</th>
+      <th>Risco stop</th>
+      <th>Risk fila</th>
+      <th>Snap 1</th>
+      <th>Snap 2</th>
+      <th>Snap 3</th>
+      <th>Snap 4</th>
+      <th>Snap 5</th>
+      <th>Snap 6</th>
+      <th>Snap 7</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @infos.each do |info| %>
+      <tr>
+        <td><%= info.index %></td>
+        <td><%= info.start_time %></td>
+        <td><%= info.paddi %></td>
+        <td><%= info.qadd %></td>
+        <td><%= info.side %></td>
+        <td><%= info.padds %></td>
+        <td><%= info.qadds %></td>
+        <td><%= info.paddf %></td>
+        <td><%= info.x %></td>
+        <td><%= info.paddw %></td>
+        <td><%= info.qaddw %></td>
+        <td><%= info.paddsw %></td>
+        <td><%= info.qaddsw %></td>
+        <td><%= info.end_time %></td>
+        <td><%= info.paddw_calculo %></td>
+        <td><%= info.paddw_financeiro %></td>
+        <td><%= info.paddsw_lucro %></td>
+        <td><%= info.paddw_calculo_plus %></td>
+        <td><%= info.paddw_financeiro_plus %></td>
+        <td><%= info.paddsw_lucro_plus %></td>
+        <td><%= info.disponivel %></td>
+        <td><%= info.risco %></td>
+        <td><%= info.risco_stop %></td>
+        <td><%= info.risk_fila %></td>
+        <td><%= info.snap_1 %></td>
+        <td><%= info.snap_2 %></td>
+        <td><%= info.snap_3 %></td>
+        <td><%= info.snap_4 %></td>
+        <td><%= info.snap_5 %></td>
+        <td><%= info.snap_6 %></td>
+        <td><%= info.snap_7 %></td>
+        <td><%= link_to 'Show', info %></td>
+        <td><%= link_to 'Edit', edit_info_path(info) %></td>
+        <td><%= link_to 'Destroy', info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Info', new_info_path %>

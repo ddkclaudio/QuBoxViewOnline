@@ -11,7 +11,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170809001922) do
+ActiveRecord::Schema.define(version: 20171005165537) do
+
+  create_table "infos", force: :cascade do |t|
+    t.integer  "index"
+    t.string   "start_time"
+    t.float    "paddi"
+    t.integer  "qadd"
+    t.text     "side"
+    t.float    "padds"
+    t.integer  "qadds"
+    t.float    "paddf"
+    t.text     "x"
+    t.float    "paddw"
+    t.integer  "qaddw"
+    t.float    "paddsw"
+    t.integer  "qaddsw"
+    t.text     "end_time"
+    t.text     "paddw_calculo"
+    t.float    "paddw_financeiro"
+    t.integer  "paddsw_lucro"
+    t.text     "paddw_calculo_plus"
+    t.float    "paddw_financeiro_plus"
+    t.integer  "paddsw_lucro_plus"
+    t.integer  "disponivel"
+    t.integer  "risco"
+    t.integer  "risco_stop"
+    t.integer  "risk_fila"
+    t.integer  "snap_1"
+    t.integer  "snap_2"
+    t.integer  "snap_3"
+    t.integer  "snap_4"
+    t.integer  "snap_5"
+    t.integer  "snap_6"
+    t.integer  "snap_7"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

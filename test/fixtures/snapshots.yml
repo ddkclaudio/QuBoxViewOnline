@@ -1,0 +1,53 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number_of_snapshot: 1
+  qaddw_dell: 1
+  qaddw_change: 1
+  qaddw_add: 1
+  qaddw_cancel: 1
+  qaddsw_dell: 1
+  qaddsw_change: 1
+  qaddsw_add: 1
+  qaddsw_cancel: 1
+  qadd_dell: 1
+  qadd_change: 1
+  qadd_add: 1
+  qadd_cancel: 1
+  vwap: 1.5
+  rps: 1.5
+  frequencia: MyText
+  tinha_buraco: 1
+  acumulado: 1.5
+  delete_no_add: 1
+  teve_iceberg: 1
+  teve_add_secundario: 1
+  preco: 1.5
+  ofi: MyText
+  mbp: 1
+
+two:
+  number_of_snapshot: 1
+  qaddw_dell: 1
+  qaddw_change: 1
+  qaddw_add: 1
+  qaddw_cancel: 1
+  qaddsw_dell: 1
+  qaddsw_change: 1
+  qaddsw_add: 1
+  qaddsw_cancel: 1
+  qadd_dell: 1
+  qadd_change: 1
+  qadd_add: 1
+  qadd_cancel: 1
+  vwap: 1.5
+  rps: 1.5
+  frequencia: MyText
+  tinha_buraco: 1
+  acumulado: 1.5
+  delete_no_add: 1
+  teve_iceberg: 1
+  teve_add_secundario: 1
+  preco: 1.5
+  ofi: MyText
+  mbp: 1

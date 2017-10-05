@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bid_price_0: 1.5
+  bid_quantity_0: 1
+  ask_price_0: 1.5
+  ask_quantity_0: 1
+  bid_price_1: 1.5
+  bid_quantity_1: 1
+  ask_price_1: 1.5
+  ask_quantity_1: 1
+  bid_price_2: 1.5
+  bid_quantity_2: 1
+  ask_price_2: 1.5
+  ask_quantity_2: 1
+  bid_price_3: 1.5
+  bid_quantity_3: 1
+  ask_price_3: 1.5
+  ask_quantity_3: 1
+  bid_price_4: 1.5
+  bid_quantity_4: 1
+  ask_price_4: 1.5
+  ask_quantity_4: 1
+
+two:
+  bid_price_0: 1.5
+  bid_quantity_0: 1
+  ask_price_0: 1.5
+  ask_quantity_0: 1
+  bid_price_1: 1.5
+  bid_quantity_1: 1
+  ask_price_1: 1.5
+  ask_quantity_1: 1
+  bid_price_2: 1.5
+  bid_quantity_2: 1
+  ask_price_2: 1.5
+  ask_quantity_2: 1
+  bid_price_3: 1.5
+  bid_quantity_3: 1
+  ask_price_3: 1.5
+  ask_quantity_3: 1
+  bid_price_4: 1.5
+  bid_quantity_4: 1
+  ask_price_4: 1.5
+  ask_quantity_4: 1

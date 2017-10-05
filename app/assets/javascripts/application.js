@@ -184,30 +184,16 @@ function disp_risk_v() {
 }
 
 function spreadZeradoGeral(segundos, local,side) {
-    if(side == 1){
-        puts("==========")
-        var qaddw = occ[local]['paddw']['qaddw'];
-        var qaddw_dc = occ['Spread_zerado']['paddw']['qaddw_dc'];
-        var qaddw_add = occ['Spread_zerado']['paddw']['qaddw_add'];
-        var qaddw_dccanc = occ['Spread_zerado']['paddw']['qaddw_dccanc'];
-        
-        var qaddsw = occ[local]['paddsw']['qaddsw'];
-        var qaddsw_dc = occ['Spread_zerado']['paddsw']['qaddsw_dc'];
-        var qaddsw_add = occ['Spread_zerado']['paddsw']['qaddsw_add'];
-        var qaddsw_dccanc = occ['Spread_zerado']['paddsw']['qaddsw_dccanc'];
-        
-    }else if(side == 2){
-        puts("###########")
-        var qaddw = occ[local]['paddw']['qaddw'];
-        var qaddw_dc = occ['Spread_zerado']['paddw']['qaddw_dc_plus'];
-        var qaddw_add = occ['Spread_zerado']['paddw']['qaddw_add_plus'];
-        var qaddw_dccanc = occ['Spread_zerado']['paddw']['qaddw_dccanc_plus'];
-        
-        var qaddsw = occ[local]['paddsw']['qaddsw'];
-        var qaddsw_dc = occ['Spread_zerado']['paddsw']['qaddsw_dc_plus'];
-        var qaddsw_add = occ['Spread_zerado']['paddsw']['qaddsw_add_plus'];
-        var qaddsw_dccanc = occ['Spread_zerado']['paddsw']['qaddsw_dccanc_plus'];
-    }
+     
+    var qaddw           = occ[local]['paddw']['qaddw'];
+    var qaddw_dc        = (1 * getValueByKey_chart_1( "snap_6" , "qaddw_dell"   )) + (1 * getValueByKey_chart_1( "snap_6" , "qaddw_change" )) ;
+    var qaddw_add       = getValueByKey_chart_1     ( "snap_6" , "qaddw_add"    );
+    var qaddw_dccanc    = getValueByKey_chart_1     ( "snap_6" , "qaddw_cancel" ) + qaddw_dc;
+    
+    var qaddsw          = occ[local]['paddsw']['qaddsw'];
+    var qaddsw_dc       = (1 * getValueByKey_chart_1( "snap_6" , "qaddsw_dell"   )) + (1 * getValueByKey_chart_1( "snap_6" , "qaddsw_change" )) ;
+    var qaddsw_add      = getValueByKey_chart_1     ( "snap_6" , "qaddsw_add"    );
+    var qaddsw_dccanc   = getValueByKey_chart_1     ( "snap_6" , "qaddsw_cancel" ) + qaddsw_dc;
     
     // SPREAD ZERADO QADDW
     $("#" + ticks + "_ticks #" + segundos + " #sz_paddw ").html(occ[local]['paddw']['paddw']);
@@ -315,6 +301,14 @@ function getValueByKey(name, key) {
     for (var i = 0; i < occ['snap_shots']['chart_2'].length; i++) {
         if (occ['snap_shots']['chart_2'][i]['name'] == name) {
             return occ['snap_shots']['chart_2'][i][key];
+        }
+    }
+}
+
+function getValueByKey_chart_1(name, key) {
+    for (var i = 0; i < occ['snap_shots']['chart_1'].length; i++) {
+        if (occ['snap_shots']['chart_1'][i]['name'] == name) {
+            return occ['snap_shots']['chart_1'][i][key];
         }
     }
 }
@@ -613,11 +607,16 @@ function max(a, b) {
 }
 
 // HANDLE FUNCTIONS
-$.getJSON("https://qubox-ddkclaudio.c9users.io/data_json_lu.json", function(json) {
-    data = json;
-    day = $("#day").html().replace("Estudos do Book - ", "");
-    find_occ();
-});
+
+
+function load_json(index){
+    $.getJSON("https://qubox-ddkclaudio.c9users.io/"+index+".json", function(json) {
+        data = json;
+        day = $("#day").html().replace("Estudos do Book - ", "");
+        find_occ();
+    });
+}
+
 
 function tab_ticks(arg) {
     ticks = arg;

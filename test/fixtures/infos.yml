@@ -1,0 +1,67 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  index: 1
+  start_time: MyString
+  paddi: 1.5
+  qadd: 1
+  side: MyText
+  padds: 1.5
+  qadds: 1
+  paddf: 1.5
+  x: MyText
+  paddw: 1.5
+  qaddw: 1
+  paddsw: 1.5
+  qaddsw: 1
+  end_time: MyText
+  paddw_calculo: MyText
+  paddw_financeiro: 1.5
+  paddsw_lucro: 1
+  paddw_calculo_plus: MyText
+  paddw_financeiro_plus: 1.5
+  paddsw_lucro_plus: 1
+  disponivel: 1
+  risco: 1
+  risco_stop: 1
+  risk_fila: 1
+  snap_1: 1
+  snap_2: 1
+  snap_3: 1
+  snap_4: 1
+  snap_5: 1
+  snap_6: 1
+  snap_7: 1
+
+two:
+  index: 1
+  start_time: MyString
+  paddi: 1.5
+  qadd: 1
+  side: MyText
+  padds: 1.5
+  qadds: 1
+  paddf: 1.5
+  x: MyText
+  paddw: 1.5
+  qaddw: 1
+  paddsw: 1.5
+  qaddsw: 1
+  end_time: MyText
+  paddw_calculo: MyText
+  paddw_financeiro: 1.5
+  paddsw_lucro: 1
+  paddw_calculo_plus: MyText
+  paddw_financeiro_plus: 1.5
+  paddsw_lucro_plus: 1
+  disponivel: 1
+  risco: 1
+  risco_stop: 1
+  risk_fila: 1
+  snap_1: 1
+  snap_2: 1
+  snap_3: 1
+  snap_4: 1
+  snap_5: 1
+  snap_6: 1
+  snap_7: 1

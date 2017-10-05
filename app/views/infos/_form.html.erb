@@ -1,0 +1,141 @@
+<%= form_for(@info) do |f| %>
+  <% if @info.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@info.errors.count, "error") %> prohibited this info from being saved:</h2>
+
+      <ul>
+      <% @info.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :index %><br>
+    <%= f.number_field :index %>
+  </div>
+  <div class="field">
+    <%= f.label :start_time %><br>
+    <%= f.text_field :start_time %>
+  </div>
+  <div class="field">
+    <%= f.label :paddi %><br>
+    <%= f.text_field :paddi %>
+  </div>
+  <div class="field">
+    <%= f.label :qadd %><br>
+    <%= f.number_field :qadd %>
+  </div>
+  <div class="field">
+    <%= f.label :side %><br>
+    <%= f.text_area :side %>
+  </div>
+  <div class="field">
+    <%= f.label :padds %><br>
+    <%= f.text_field :padds %>
+  </div>
+  <div class="field">
+    <%= f.label :qadds %><br>
+    <%= f.number_field :qadds %>
+  </div>
+  <div class="field">
+    <%= f.label :paddf %><br>
+    <%= f.text_field :paddf %>
+  </div>
+  <div class="field">
+    <%= f.label :x %><br>
+    <%= f.text_area :x %>
+  </div>
+  <div class="field">
+    <%= f.label :paddw %><br>
+    <%= f.text_field :paddw %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddw %><br>
+    <%= f.number_field :qaddw %>
+  </div>
+  <div class="field">
+    <%= f.label :paddsw %><br>
+    <%= f.text_field :paddsw %>
+  </div>
+  <div class="field">
+    <%= f.label :qaddsw %><br>
+    <%= f.number_field :qaddsw %>
+  </div>
+  <div class="field">
+    <%= f.label :end_time %><br>
+    <%= f.text_area :end_time %>
+  </div>
+  <div class="field">
+    <%= f.label :paddw_calculo %><br>
+    <%= f.text_area :paddw_calculo %>
+  </div>
+  <div class="field">
+    <%= f.label :paddw_financeiro %><br>
+    <%= f.text_field :paddw_financeiro %>
+  </div>
+  <div class="field">
+    <%= f.label :paddsw_lucro %><br>
+    <%= f.number_field :paddsw_lucro %>
+  </div>
+  <div class="field">
+    <%= f.label :paddw_calculo_plus %><br>
+    <%= f.text_area :paddw_calculo_plus %>
+  </div>
+  <div class="field">
+    <%= f.label :paddw_financeiro_plus %><br>
+    <%= f.text_field :paddw_financeiro_plus %>
+  </div>
+  <div class="field">
+    <%= f.label :paddsw_lucro_plus %><br>
+    <%= f.number_field :paddsw_lucro_plus %>
+  </div>
+  <div class="field">
+    <%= f.label :disponivel %><br>
+    <%= f.number_field :disponivel %>
+  </div>
+  <div class="field">
+    <%= f.label :risco %><br>
+    <%= f.number_field :risco %>
+  </div>
+  <div class="field">
+    <%= f.label :risco_stop %><br>
+    <%= f.number_field :risco_stop %>
+  </div>
+  <div class="field">
+    <%= f.label :risk_fila %><br>
+    <%= f.number_field :risk_fila %>
+  </div>
+  <div class="field">
+    <%= f.label :snap_1 %><br>
+    <%= f.number_field :snap_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :snap_2 %><br>
+    <%= f.number_field :snap_2 %>
+  </div>
+  <div class="field">
+    <%= f.label :snap_3 %><br>
+    <%= f.number_field :snap_3 %>
+  </div>
+  <div class="field">
+    <%= f.label :snap_4 %><br>
+    <%= f.number_field :snap_4 %>
+  </div>
+  <div class="field">
+    <%= f.label :snap_5 %><br>
+    <%= f.number_field :snap_5 %>
+  </div>
+  <div class="field">
+    <%= f.label :snap_6 %><br>
+    <%= f.number_field :snap_6 %>
+  </div>
+  <div class="field">
+    <%= f.label :snap_7 %><br>
+    <%= f.number_field :snap_7 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

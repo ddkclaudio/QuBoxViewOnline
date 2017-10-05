@@ -31,9 +31,49 @@
     </span>
     <nav class="mdl-navigation">
         
-        <% for day in @days %>
-          <a class="mdl-navigation__link" href="<%= day_path day  %>"><%= day %></a>
-        <% end %>
+        
+<a class="mdl-navigation__link" href="/qubox/17-J17-2017">17-J17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/21-J17-2017">21-J17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/22-J17-2017">22-J17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/23-J17-2017">23-J17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/24-J17-2017">24-J17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/27-J17-2017">27-J17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/28-J17-2017">28-J17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/29-J17-2017">29-J17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/30-J17-2017">30-J17-2017</a>
+
+<a class="mdl-navigation__link" href="/qubox/31-K17-2017">31-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/3-K17-2017">3-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/4-K17-2017">4-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/5-K17-2017">5-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/6-K17-2017">6-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/7-K17-2017">7-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/10-K17-2017">10-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/11-K17-2017">11-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/12-K17-2017">12-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/13-K17-2017">13-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/17-K17-2017">17-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/18-K17-2017">18-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/19-K17-2017">19-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/20-K17-2017">20-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/24-K17-2017">24-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/25-K17-2017">25-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/26-K17-2017">26-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/27-K17-2017">27-K17-2017</a>
+
+<a class="mdl-navigation__link" href="/qubox/28-M17-2017">28-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/3-M17-2017">3-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/4-M17-2017">4-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/5-M17-2017">5-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/8-M17-2017">8-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/9-M17-2017">9-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/10-M17-2017">10-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/11-M17-2017">11-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/12-M17-2017">12-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/15-M17-2017">15-M17-2017</a>
+
+
+        
       
     </nav>
   </div>
@@ -50,3 +90,9 @@
   
   </main>
 </div>
+
+<script>
+  $( document ).ready(function() {
+    load_json('<%= @day %>');
+  });
+</script>
