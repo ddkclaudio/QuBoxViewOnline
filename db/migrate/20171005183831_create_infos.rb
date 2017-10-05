@@ -32,6 +32,8 @@ class CreateInfos < ActiveRecord::Migration
       t.integer :snap_5
       t.integer :snap_6
       t.integer :snap_7
+      t.integer :ticks
+      t.date    :day
 
       t.timestamps null: true
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005175040) do
+ActiveRecord::Schema.define(version: 20171005183831) do
 
   create_table "infos", force: :cascade do |t|
     t.integer  "index"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20171005175040) do
     t.integer  "snap_5"
     t.integer  "snap_6"
     t.integer  "snap_7"
+    t.integer  "ticks"
+    t.date     "day"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

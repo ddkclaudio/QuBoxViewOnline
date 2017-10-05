@@ -1,79 +1,24 @@
 class QuboxController < ApplicationController
-   before_action :get_json, only: [:index]
+#   before_action :get_json, only: [:index]
     
     def index
-        info_day = @day.split('-')
-        
-        if info_day[1] == 'J17'
-            tmp = @JSON['J17']
-            for i in 0..(tmp.length - 1)
-                if tmp[i]['day'] == @day
-                    @data = tmp[i]
-                end
-            end
-        end
-        
-        if info_day[1] == 'K17'
-            tmp = @JSON['K17']
-            for i in 0..(tmp.length - 1)
-                if tmp[i]['day'] == @day
-                    @data = tmp[i]
-                end
-            end
-        end
-        
-        if info_day[1] == 'M17'
-            tmp = @JSON['M17']
-            for i in 0..(tmp.length - 1)
-                if tmp[i]['day'] == @day
-                    @data = tmp[i]
-                end
-            end
-        end
-    
-    end
-    
-    def get_json
         if params.key?('id')
             @day = params['id']
         else
-            @day = "23-J17-2017"
-        end
-      @JSON_TXT = File.read("#{Rails.public_path}/#{@day}.json")
-      @JSON = JSON.parse(@JSON_TXT)  
-      get_days
-    end
-
-    def get_days
-        @day = nil
-        @days = [] 
-        
-        if @JSON.key?('J17')
-            j17 = @JSON['J17']
-            for i in 0..(j17.length - 1)
-                @days.push(j17[i]['day'])
-            end
+            @day = '2017-03-23'
         end
         
-        if @JSON.key?('K17')
-            j17 = @JSON['K17']
-            for i in 0..(j17.length - 1)
-                 @days.push(j17[i]['day'])
-            end
+        @all_days = Info.uniq.pluck(:day)
+        
+        @infos = Hash.new
+        (2..10).each do |i|
+            @infos[i] = Hash.new
+            @infos[i]['less50'] = Info.where("ticks = '#{i}' and day = '#{@day}' and qadd < 50")
+            @infos[i]['more50'] = Info.where("ticks = '#{i}' and day = '#{@day}' and qadd > 49")
         end
         
-        if @JSON.key?('M17')
-            j17 = @JSON['M17']
-            for i in 0..(j17.length - 1)
-                 @days.push(j17[i]['day'])
-            end
-        end
         
-        if params.key?('id')
-            @day = params['id']
-        elsif @days.length > 0
-            @day = @days[0]
-        end
     end
   
 end
+

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :infos
   resources :snapshots
   resources :snapshots
   resources :infos

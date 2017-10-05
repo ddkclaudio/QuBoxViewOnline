@@ -32,6 +32,8 @@ one:
   snap_5: 1
   snap_6: 1
   snap_7: 1
+  ticks: 1
+  day: 2017-10-05
 
 two:
   index: 1
@@ -65,3 +67,5 @@ two:
   snap_5: 1
   snap_6: 1
   snap_7: 1
+  ticks: 1
+  day: 2017-10-05

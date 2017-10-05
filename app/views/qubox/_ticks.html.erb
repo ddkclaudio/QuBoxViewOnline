@@ -1,4 +1,4 @@
-<% if !tick['less50'].blank? or !tick['more50'].blank? %>
+<% if tick.size > 0 %>
 <div id='<%= i %>_ticks' class="mdl-grid demo-content">
    
    <!-- Total --->
@@ -26,33 +26,19 @@
          <option value="" disabled selected>ADD < 50 </option>
          
          <% for occ in tick['less50']%>
-         <% occ = occ['informacoes']['start_time'] %>
-            <option value="<%= occ %>"><%= occ.gsub('000', '').gsub("T"," ") %></option>
+            <option value="<%= occ.id %>"><%= occ.start_time %></option>
          <% end %>
          
          
           <option value="" disabled selected>ADD >= 50</option>
          <% for occ in tick['more50']%>
-         <% occ = occ['informacoes']['start_time'] %>
-            <option value="<%= occ %>"><%= occ.gsub('000', '').gsub("T"," ") %></option>
+            <option value="<%= occ.id %>"><%= occ.start_time %></option>
          <% end %>
-         
       </select>
-      
-      
    </div>
    
-   <% if !tick['more50'].blank? %>
-      <!--DADOS GERAIS-->
-      <%= render :partial => "informacoes", locals: {info: tick['more50'][0]['informacoes']} %>
-   <% end %>
-   <!--DISPONIVEL & RISCOS-->
-   
-   <% if tick['more50'][0]['informacoes']['side'] == 'C'%>
-      <%= render :partial => "disponivel_c",locals:{disp: tick['more50'][0]['disponivel'],risk: tick['more50'][0]['risco'],risks: tick['more50'][0]['risco_stop']}%>
-   <%else%>
-      <%= render :partial => "disponivel_v",locals:{disp: tick['more50'][0]['disponivel'],risk: tick['more50'][0]['risco'],risks: tick['more50'][0]['risco_stop']}%>
-   <% end %>
+   <%= render :partial => "informacoes" %>
+   <%= render :partial => "disponivel_v"%>
  
     <div class='mdl-grid'>
    <!--Snapshot-->

@@ -11,9 +11,9 @@
     <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         
     <% for i in 2..10 %>
-      <% if i == 2%>
+      <% if i == 2 and (@infos[i]['less50'].size +  @infos[i]['more50'].size) > 0  %>
           <a href="#scroll-tab-<%= i %>" class="mdl-layout__tab is-active" onclick="tab_ticks(<%= i %>)"><%= i %> tick</a>
-      <% else %>
+      <% elsif (@infos[i]['less50'].size +  @infos[i]['more50'].size) > 0  %>
           <a href="#scroll-tab-<%= i %>" class="mdl-layout__tab"  onclick="tab_ticks(<%= i %>)"><%= i %> tick</a>
       <% end %>
     <% end %>
@@ -32,45 +32,46 @@
     <nav class="mdl-navigation">
         
         
-<a class="mdl-navigation__link" href="/qubox/17-J17-2017">17-J17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/21-J17-2017">21-J17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/22-J17-2017">22-J17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/23-J17-2017">23-J17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/24-J17-2017">24-J17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/27-J17-2017">27-J17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/28-J17-2017">28-J17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/29-J17-2017">29-J17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/30-J17-2017">30-J17-2017</a>
+        <a class="mdl-navigation__link" href="/qubox/2017-03-17">17/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-21">21/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-22">22/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-23">23/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-24">24/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-27">27/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-28">28/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-29">29/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-30">30/03/2017</a>
 
-<a class="mdl-navigation__link" href="/qubox/31-K17-2017">31-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/3-K17-2017">3-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/4-K17-2017">4-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/5-K17-2017">5-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/6-K17-2017">6-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/7-K17-2017">7-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/10-K17-2017">10-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/11-K17-2017">11-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/12-K17-2017">12-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/13-K17-2017">13-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/17-K17-2017">17-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/18-K17-2017">18-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/19-K17-2017">19-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/20-K17-2017">20-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/24-K17-2017">24-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/25-K17-2017">25-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/26-K17-2017">26-K17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/27-K17-2017">27-K17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-03-31">31/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-03">03/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-04">04/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-05">05/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-06">06/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-07">07/03/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-10">10/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-11">11/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-12">12/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-13">13/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-17">17/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-18">18/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-19">19/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-20">20/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-24">24/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-25">25/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-26">26/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-27">27/04/2017</a>
 
-<a class="mdl-navigation__link" href="/qubox/28-M17-2017">28-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/3-M17-2017">3-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/4-M17-2017">4-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/5-M17-2017">5-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/8-M17-2017">8-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/9-M17-2017">9-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/10-M17-2017">10-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/11-M17-2017">11-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/12-M17-2017">12-M17-2017</a>
-<a class="mdl-navigation__link" href="/qubox/15-M17-2017">15-M17-2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-04-28">28/04/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-03">03/05/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-04">04/05/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-05">05/05/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-08">08/05/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-09">09/05/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-10">10/05/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-11">11/05/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-12">12/05/2017</a>
+<a class="mdl-navigation__link" href="/qubox/2017-05-15">15/05/2017</a>
+
 
 
         
@@ -79,12 +80,21 @@
   </div>
   <main class="mdl-layout__content">
     <section class="mdl-layout__tab-panel is-active" id="scroll-tab-2">
-      <div class="page-content"><%= render :partial => "ticks", locals: {tick:  @data['2'], i: 2} %></div>
+      <div class="page-content"><%= 
+      
+       render :partial => "ticks", locals: {tick: @infos[2], i: 2 }
+      
+      %></div>
     </section>
     
     <% for i in 3..10 %>
     <section class="mdl-layout__tab-panel" id="scroll-tab-<%= i %>">
-      <div class="page-content"><%= render :partial => "ticks", locals: {tick: @data["#{i}"], i: i     }%></div>
+      <div class="page-content"><%= 
+      
+      render :partial => "ticks", locals: {tick: @infos[i], i: i }
+      
+      
+      %></div>
     </section>
     <% end %>
   
