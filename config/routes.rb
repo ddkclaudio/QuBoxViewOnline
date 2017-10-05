@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
-  resources :mbps
-  resources :snapshots
   resources :snapshots
   resources :snapshots
   resources :infos
-  resources :snapshots
   resources :mbps
-  resources :infos
   get 'qubox' => 'qubox#index', as: :day_null
   get 'qubox/:id' => 'qubox#index', as: :day
   

@@ -24,7 +24,7 @@ one:
   teve_add_secundario: 1
   preco: 1.5
   ofi: MyText
-  mbp: 1
+  id_mbp: 1
 
 two:
   number_of_snapshot: 1
@@ -50,4 +50,4 @@ two:
   teve_add_secundario: 1
   preco: 1.5
   ofi: MyText
-  mbp: 1
+  id_mbp: 1

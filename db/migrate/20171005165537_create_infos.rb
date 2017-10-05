@@ -33,7 +33,7 @@ class CreateInfos < ActiveRecord::Migration
       t.integer :snap_6
       t.integer :snap_7
 
-      t.timestamps null: false
+      t.timestamps null: true
     end
   end
 end

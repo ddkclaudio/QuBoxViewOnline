@@ -22,7 +22,7 @@ class CreateMbps < ActiveRecord::Migration
       t.float :ask_price_4
       t.integer :ask_quantity_4
 
-      t.timestamps null: false
+      t.timestamps null: true
     end
   end
 end

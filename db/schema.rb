@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005170621) do
+ActiveRecord::Schema.define(version: 20171005175040) do
 
   create_table "infos", force: :cascade do |t|
     t.integer  "index"
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(version: 20171005170621) do
     t.integer  "snap_5"
     t.integer  "snap_6"
     t.integer  "snap_7"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "mbps", force: :cascade do |t|
@@ -70,8 +70,8 @@ ActiveRecord::Schema.define(version: 20171005170621) do
     t.integer  "bid_quantity_4"
     t.float    "ask_price_4"
     t.integer  "ask_quantity_4"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "snapshots", force: :cascade do |t|
@@ -98,8 +98,9 @@ ActiveRecord::Schema.define(version: 20171005170621) do
     t.integer  "teve_add_secundario"
     t.float    "preco"
     t.text     "ofi"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.integer  "id_mbp"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: :cascade do |t|

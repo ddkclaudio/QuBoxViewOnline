@@ -24,9 +24,9 @@ class CreateSnapshots < ActiveRecord::Migration
       t.integer :teve_add_secundario
       t.float :preco
       t.text :ofi
-      t.integer :mbp
+      t.integer :id_mbp
 
-      t.timestamps null: false
+      t.timestamps null: true
     end
   end
 end

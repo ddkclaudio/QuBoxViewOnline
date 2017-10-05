@@ -69,6 +69,6 @@ class SnapshotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def snapshot_params
-      params.require(:snapshot).permit(:number_of_snapshot, :qaddw_dell, :qaddw_change, :qaddw_add, :qaddw_cancel, :qaddsw_dell, :qaddsw_change, :qaddsw_add, :qaddsw_cancel, :qadd_dell, :qadd_change, :qadd_add, :qadd_cancel, :vwap, :rps, :frequencia, :tinha_buraco, :acumulado, :delete_no_add, :teve_iceberg, :teve_add_secundario, :preco, :ofi, :mbp)
+      params.require(:snapshot).permit(:number_of_snapshot, :qaddw_dell, :qaddw_change, :qaddw_add, :qaddw_cancel, :qaddsw_dell, :qaddsw_change, :qaddsw_add, :qaddsw_cancel, :qadd_dell, :qadd_change, :qadd_add, :qadd_cancel, :vwap, :rps, :frequencia, :tinha_buraco, :acumulado, :delete_no_add, :teve_iceberg, :teve_add_secundario, :preco, :ofi, :id_mbp)
     end
 end
