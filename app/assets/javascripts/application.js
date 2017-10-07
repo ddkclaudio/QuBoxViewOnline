@@ -397,13 +397,17 @@ function vwap_status(vwap) {
             return "Contra";
 }
 
+function percent(arg){
+    return ((arg * 100) / data['qaddw']).toFixed(2) ;
+}
+
 function table_of_analisys() {
     //Porcentagem removida no QADDW/WDO:
-    $("#" + ticks + "_ticks td#pqaddw_1").html(snap_2['qaddw_dell'] + snap_2['qaddw_change']);
-    $("#" + ticks + "_ticks td#pqaddw_2").html(snap_3['qaddw_dell'] + snap_3['qaddw_change']);
-    $("#" + ticks + "_ticks td#pqaddw_3").html(snap_4['qaddw_dell'] + snap_4['qaddw_change']);
-    $("#" + ticks + "_ticks td#pqaddw_4").html(snap_5['qaddw_dell'] + snap_5['qaddw_change']);
-    $("#" + ticks + "_ticks td#pqaddw_5").html(snap_6['qaddw_dell'] + snap_6['qaddw_change']);
+    $("#" + ticks + "_ticks td#pqaddw_1").html(percent(snap_2['qaddw_dell'] + snap_2['qaddw_change']));
+    $("#" + ticks + "_ticks td#pqaddw_2").html(percent(snap_3['qaddw_dell'] + snap_3['qaddw_change']));
+    $("#" + ticks + "_ticks td#pqaddw_3").html(percent(snap_4['qaddw_dell'] + snap_4['qaddw_change']));
+    $("#" + ticks + "_ticks td#pqaddw_4").html(percent(snap_5['qaddw_dell'] + snap_5['qaddw_change']));
+    $("#" + ticks + "_ticks td#pqaddw_5").html(percent(snap_6['qaddw_dell'] + snap_6['qaddw_change']));
     $("#" + ticks + "_ticks td#pqaddw_6").html("??");
 
 
@@ -627,13 +631,13 @@ function drawChart_rps() {
     });
     data.addColumn('number', 'Rps');
     data.addColumn('number', 'Saldo acumulado');
-
-    data.addRow([getLabel('snap_1'), '', '', snap_1['rps'], snap_1['acumudado']]);
-    data.addRow([getLabel('snap_2'), '', '', snap_1['rps'], snap_1['acumudado']]);
-    data.addRow([getLabel('snap_3'), '', '', snap_1['rps'], snap_1['acumudado']]);
-    data.addRow([getLabel('snap_4'), '', '', snap_1['rps'], snap_1['acumudado']]);
-    data.addRow([getLabel('snap_5'), '', '', snap_1['rps'], snap_1['acumudado']]);
-    data.addRow([getLabel('snap_6'), '', '', snap_1['rps'], snap_1['acumudado']]);
+    
+    data.addRow([getLabel('snap_1'), '', '', snap_1['rps'], snap_1['acumulado']]);
+    data.addRow([getLabel('snap_2'), '', '', snap_2['rps'], snap_2['acumulado']]);
+    data.addRow([getLabel('snap_3'), '', '', snap_3['rps'], snap_3['acumulado']]);
+    data.addRow([getLabel('snap_4'), '', '', snap_4['rps'], snap_4['acumulado']]);
+    data.addRow([getLabel('snap_5'), '', '', snap_5['rps'], snap_5['acumulado']]);
+    data.addRow([getLabel('snap_6'), '', '', snap_6['rps'], snap_6['acumulado']]);
 
     // Create and draw the visualization.
     new google.visualization.LineChart(document.getElementById('rps_chart_' + ticks)).
