@@ -290,6 +290,8 @@ function set_snap_c(index) {
 
     var soma_l = 0;
     var soma_r = 0;
+    
+    if((data['snap_7'] > 0 && index == 7) || index == 1 || index == 2 || index == 3 || index == 4 || index == 5 || index == 6){
     for (var i = 0; i < 5; i++) {
         var a = tmp['bid_price_' + i];
         var b = tmp['bid_quantity_' + i];
@@ -305,6 +307,8 @@ function set_snap_c(index) {
     }
     $("#" + ticks + "_ticks td#snap_" + index + "_50").html(soma_l);
     $("#" + ticks + "_ticks td#snap_" + index + "_53").html(soma_r);
+    }
+    
 }
 
 function set_snap_v(index) {
@@ -710,7 +714,8 @@ function load_json(index) {
                 sync();
             });
         });
-
+        
+        if(data['snap_7'] > 0){
         $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_7'] + ".json", function(snap_7_json) {
             snap_7 = snap_7_json;
             
@@ -719,7 +724,11 @@ function load_json(index) {
                 sync();
             });
         });
-
+        }else{
+            sync();
+            
+        }
+            
         $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_1'] + ".json", function(snap_1_json) {
             snap_1 = snap_1_json;
             $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + snap_1['id_mbp'] + ".json", function(json) {
