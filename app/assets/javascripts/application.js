@@ -18,225 +18,288 @@ google.charts.load('current', {
     'packages': ['corechart']
 });
 
+var sync_count = 0;
 var data;
+var snap_1;
+var snap_2;
+var snap_3;
+var snap_4;
+var snap_5;
+var snap_6;
+var snap_7;
+
+var snap_1_shot;
+var snap_2_shot;
+var snap_3_shot;
+var snap_4_shot;
+var snap_5_shot;
+var snap_6_shot;
+var snap_7_shot;
+
+var disponivel;
+var risco;
+var risco_stop;
+var risk_fila;
+
 var ticks = 2;
-var occ;
-var day;
 
-var occs = new Object(); // or just {}
-
-// UPDATE
 function informacoes() {
-    $("#" + ticks + "_ticks #index_occ").html(occ['informacoes']['index']);
-    $("#" + ticks + "_ticks #start_time").html(occ['informacoes']['start_time'].replace("000", "").replace("T", " ").replace("2017-03-23", ""));
-    $("#" + ticks + "_ticks #paddi").html(occ['informacoes']['paddi']);
-    $("#" + ticks + "_ticks #qadd").html(occ['informacoes']['qadd']);
-    $("#" + ticks + "_ticks #side").html(occ['informacoes']['side']);
-    $("#" + ticks + "_ticks #padds").html(occ['informacoes']['padds']);
-    $("#" + ticks + "_ticks #qadds").html(occ['informacoes']['qadds']);
-    $("#" + ticks + "_ticks #paddf").html(occ['informacoes']['paddf']);
-    $("#" + ticks + "_ticks #x").html(occ['informacoes']['x']);
-    $("#" + ticks + "_ticks #paddw").html(occ['informacoes']['paddw']);
-    $("#" + ticks + "_ticks #qaddw").html(occ['informacoes']['qaddw']);
-    $("#" + ticks + "_ticks #paddsw").html(occ['informacoes']['paddsw']);
-    $("#" + ticks + "_ticks #qaddsw").html(occ['informacoes']['qaddsw']);
-    $("#" + ticks + "_ticks #end_time").html(occ['informacoes']['end_time'].replace("000", "").replace("T", " ").replace("2017-03-23", ""));
-    $("#" + ticks + "_ticks #vwap").html(getValueByKey("snap_1", "vwap_contra"));
-    $("#" + ticks + "_ticks #RPS_INFO").html(getValueByKey("snap_1", "rps_all"));
+    $("#" + ticks + "_ticks #index_occ  ").html(data['index'])
+    $("#" + ticks + "_ticks #start_time ").html(data['start_time'].split(' ')[1])
+    $("#" + ticks + "_ticks #paddi      ").html(data['paddi'])
+    $("#" + ticks + "_ticks #qadd       ").html(data['qadd'])
+    $("#" + ticks + "_ticks #side       ").html(data['side'])
+    $("#" + ticks + "_ticks #padds      ").html(data['padds'])
+    $("#" + ticks + "_ticks #qadds      ").html(data['qadds'])
+    $("#" + ticks + "_ticks #paddf      ").html(data['paddf'])
+    $("#" + ticks + "_ticks #x          ").html(data['x'])
+    $("#" + ticks + "_ticks #paddw      ").html(data['paddw'])
+    $("#" + ticks + "_ticks #qaddw      ").html(data['qaddw'])
+    $("#" + ticks + "_ticks #paddsw     ").html(data['paddsw'])
+    $("#" + ticks + "_ticks #qaddsw     ").html(data['qaddsw'])
+    $("#" + ticks + "_ticks #end_time   ").html(data['end_time'].split(' ')[1])
+    $("#" + ticks + "_ticks #vwap       ").html(snap_1['vwap'])
+    $("#" + ticks + "_ticks #RPS_INFO   ").html(snap_1['rps'])
 }
 
 function disp_risk_c() {
     var template = "<div id='disp_risk'> <table class='mdl-data-table  mdl-data-table--selectable mdl-shadow--2dp mdl-cell mdl-cell--2-col'> <thead> <tr> <th class='border'>Risco</th> <th class='border'>Preço</th> <th class='border'>Preço</th> <th class='border'>Disponível</th> </tr> </thead> <tbody> <tr> <td id='risk_00' class='border'>xxxx</td> <td id='risk_01' class='border'>xxxx</td> <td id='disp_00' class='border'>xxxx</td> <td id='disp_01' class='border'>xxxx</td> </tr> <tr> <td id='risk_10' class='border'>xxxx</td> <td id='risk_11' class='border'>xxxx</td> <td id='disp_10' class='border'>xxxx</td> <td id='disp_11' class='border'>xxxx</td> </tr> <tr> <td id='risk_20' class='border'>xxxx</td> <td id='risk_21' class='border'>xxxx</td> <td id='disp_20' class='border'>xxxx</td> <td id='disp_21' class='border'>xxxx</td> </tr> <tr> <td id='risk_30' class='border'>xxxx</td> <td id='risk_31' class='border'>xxxx</td> <td id='disp_30' class='border'>xxxx</td> <td id='disp_31' class='border'>xxxx</td> </tr> <tr> <td id='risk_40' class='border'>xxxx</td> <td id='risk_41' class='border'>xxxx</td> <td id='disp_40' class='border'>xxxx</td> <td id='disp_41' class='border'>xxxx</td> </tr> <tr> <td id='risk_50' class='border'>xxxx</td> <td id='risk_51' class='border'></td> <td id='disp_50' class='border'></td> <td id='disp_51' class='border'>xxxx</td> </tr> </tbody> </table> <table class='mdl-data-table  mdl-data-table--selectable mdl-shadow--2dp mdl-cell mdl-cell--2-col'> <thead> <tr> <th class='border'>Risc Stop</th> <th class='border'>Preço</th> <th class='border'>Preço</th> <th class='border'>Fila</th> </tr> </thead> <tbody> <tr> <td id='risk_stop_00' class='border'>xxxx</td> <td id='risk_stop_01' class='border'>xxxx</td> <td id='fila_00'      class='border'>xxxx</td> <td id='fila_01'      class='border'>xxxx</td> </tr> <tr> <td id='risk_stop_10' class='border'>xxxx</td> <td id='risk_stop_11' class='border'>xxxx</td> <td id='fila_10' class='border'>xxxx</td> <td id='fila_11' class='border'>xxxx</td> </tr> <tr> <td id='risk_stop_20' class='border'>xxxx</td> <td id='risk_stop_21' class='border'>xxxx</td> <td id='fila_20' class='border'>xxxx</td> <td id='fila_21' class='border'>xxxx</td> </tr> <tr> <td id='risk_stop_30' class='border'>xxxx</td> <td id='risk_stop_31' class='border'>xxxx</td> <td id='fila_30' class='border'>xxxx</td> <td id='fila_31' class='border'>xxxx</td> </tr> <tr> <td id='risk_stop_40' class='border'>xxxx</td> <td id='risk_stop_41' class='border'>xxxx</td> <td id='fila_40' class='border'>xxxx</td> <td id='fila_41' class='border'>xxxx</td> </tr> <tr> <td id='risk_stop_50' class='border'>xxxx</td> <td id='risk_stop_51' class='border'></td> <td id='fila_50' class='border'></td> <td id='fila_51' class='border'>xxxx</td> </tr> </tbody> </table> </div>";
     $("#disp_risk").html(template);
-    $("#" + ticks + "_ticks #disp_00 ").html(occ['disponivel'][0]['price']);
-    $("#" + ticks + "_ticks #disp_01 ").html(occ['disponivel'][0]['quantity']);
-    $("#" + ticks + "_ticks #disp_10 ").html(occ['disponivel'][1]['price']);
-    $("#" + ticks + "_ticks #disp_11 ").html(occ['disponivel'][1]['quantity']);
-    $("#" + ticks + "_ticks #disp_20 ").html(occ['disponivel'][2]['price']);
-    $("#" + ticks + "_ticks #disp_21 ").html(occ['disponivel'][2]['quantity']);
-    $("#" + ticks + "_ticks #disp_30 ").html(occ['disponivel'][3]['price']);
-    $("#" + ticks + "_ticks #disp_31 ").html(occ['disponivel'][3]['quantity']);
-    $("#" + ticks + "_ticks #disp_40 ").html(occ['disponivel'][4]['price']);
-    $("#" + ticks + "_ticks #disp_41 ").html(occ['disponivel'][4]['quantity']);
+    $("#" + ticks + "_ticks #disp_00 ").html(disponivel['bid_price_0']);
+    $("#" + ticks + "_ticks #disp_01 ").html(disponivel['bid_quantity_0']);
+    $("#" + ticks + "_ticks #disp_10 ").html(disponivel['bid_price_1']);
+    $("#" + ticks + "_ticks #disp_11 ").html(disponivel['bid_quantity_1']);
+    $("#" + ticks + "_ticks #disp_20 ").html(disponivel['bid_price_2']);
+    $("#" + ticks + "_ticks #disp_21 ").html(disponivel['bid_quantity_2']);
+    $("#" + ticks + "_ticks #disp_30 ").html(disponivel['bid_price_3']);
+    $("#" + ticks + "_ticks #disp_31 ").html(disponivel['bid_quantity_3']);
+    $("#" + ticks + "_ticks #disp_40 ").html(disponivel['bid_price_4']);
+    $("#" + ticks + "_ticks #disp_41 ").html(disponivel['bid_quantity_4']);
     $("#" + ticks + "_ticks #disp_50 ").html('');
-    $("#" + ticks + "_ticks #disp_51 ").html(occ['disponivel'][0]['quantity'] +
-        occ['disponivel'][1]['quantity'] +
-        occ['disponivel'][2]['quantity'] +
-        occ['disponivel'][3]['quantity'] +
-        occ['disponivel'][4]['quantity']);
-    $("#" + ticks + "_ticks #risk_00 ").html(occ['risco'][0]['quantity']);
-    $("#" + ticks + "_ticks #risk_01 ").html(occ['risco'][0]['price']);
-    $("#" + ticks + "_ticks #risk_10 ").html(occ['risco'][1]['quantity']);
-    $("#" + ticks + "_ticks #risk_11 ").html(occ['risco'][1]['price']);
-    $("#" + ticks + "_ticks #risk_20 ").html(occ['risco'][2]['quantity']);
-    $("#" + ticks + "_ticks #risk_21 ").html(occ['risco'][2]['price']);
-    $("#" + ticks + "_ticks #risk_30 ").html(occ['risco'][3]['quantity']);
-    $("#" + ticks + "_ticks #risk_31 ").html(occ['risco'][3]['price']);
-    $("#" + ticks + "_ticks #risk_40 ").html(occ['risco'][4]['quantity']);
-    $("#" + ticks + "_ticks #risk_41 ").html(occ['risco'][4]['price']);
+    $("#" + ticks + "_ticks #disp_51 ").html(disponivel['bid_quantity_0'] + disponivel['bid_quantity_1'] + disponivel['bid_quantity_2'] + disponivel['bid_quantity_3'] + disponivel['bid_quantity_4']);
+
+    $("#" + ticks + "_ticks #risk_00 ").html(risco['bid_quantity_0']);
+    $("#" + ticks + "_ticks #risk_01 ").html(risco['bid_price_0']);
+    $("#" + ticks + "_ticks #risk_10 ").html(risco['bid_quantity_1']);
+    $("#" + ticks + "_ticks #risk_11 ").html(risco['bid_price_1']);
+    $("#" + ticks + "_ticks #risk_20 ").html(risco['bid_quantity_2']);
+    $("#" + ticks + "_ticks #risk_21 ").html(risco['bid_price_2']);
+    $("#" + ticks + "_ticks #risk_30 ").html(risco['bid_quantity_3']);
+    $("#" + ticks + "_ticks #risk_31 ").html(risco['bid_price_3']);
+    $("#" + ticks + "_ticks #risk_40 ").html(risco['bid_quantity_4']);
+    $("#" + ticks + "_ticks #risk_41 ").html(risco['bid_price_4']);
     $("#" + ticks + "_ticks #risk_51 ").html('');
-    $("#" + ticks + "_ticks #risk_50 ").html(occ['risco'][0]['quantity'] +
-        occ['risco'][1]['quantity'] +
-        occ['risco'][2]['quantity'] +
-        occ['risco'][3]['quantity'] +
-        occ['risco'][4]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_01 ").html(occ['risco_stop'][0]['price']);
-    $("#" + ticks + "_ticks #risk_stop_00 ").html(occ['risco_stop'][0]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_11 ").html(occ['risco_stop'][1]['price']);
-    $("#" + ticks + "_ticks #risk_stop_10 ").html(occ['risco_stop'][1]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_21 ").html(occ['risco_stop'][2]['price']);
-    $("#" + ticks + "_ticks #risk_stop_20 ").html(occ['risco_stop'][2]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_31 ").html(occ['risco_stop'][3]['price']);
-    $("#" + ticks + "_ticks #risk_stop_30 ").html(occ['risco_stop'][3]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_41 ").html(occ['risco_stop'][4]['price']);
-    $("#" + ticks + "_ticks #risk_stop_40 ").html(occ['risco_stop'][4]['quantity']);
+    $("#" + ticks + "_ticks #risk_50 ").html(risco['bid_quantity_0'] + risco['bid_quantity_1'] + risco['bid_quantity_2'] + risco['bid_quantity_3'] + risco['bid_quantity_4']);
+
+    $("#" + ticks + "_ticks #risk_stop_01 ").html(risco_stop['bid_price_0']);
+    $("#" + ticks + "_ticks #risk_stop_00 ").html(risco_stop['bid_quantity_0']);
+    $("#" + ticks + "_ticks #risk_stop_11 ").html(risco_stop['bid_price_1']);
+    $("#" + ticks + "_ticks #risk_stop_10 ").html(risco_stop['bid_quantity_1']);
+    $("#" + ticks + "_ticks #risk_stop_21 ").html(risco_stop['bid_price_2']);
+    $("#" + ticks + "_ticks #risk_stop_20 ").html(risco_stop['bid_quantity_2']);
+    $("#" + ticks + "_ticks #risk_stop_31 ").html(risco_stop['bid_price_3']);
+    $("#" + ticks + "_ticks #risk_stop_30 ").html(risco_stop['bid_quantity_3']);
+    $("#" + ticks + "_ticks #risk_stop_41 ").html(risco_stop['bid_price_4']);
+    $("#" + ticks + "_ticks #risk_stop_40 ").html(risco_stop['bid_quantity_4']);
     $("#" + ticks + "_ticks #risk_stop_51 ").html('');
-    $("#" + ticks + "_ticks #risk_stop_50 ").html(occ['risco_stop'][0]['quantity'] +
-        occ['risco_stop'][1]['quantity'] +
-        occ['risco_stop'][2]['quantity'] +
-        occ['risco_stop'][3]['quantity'] +
-        occ['risco_stop'][4]['quantity']);
-    $("#" + ticks + "_ticks #fila_01 ").html(occ['risk_fila'][0]['quantity']);
-    $("#" + ticks + "_ticks #fila_00 ").html(occ['risk_fila'][0]['price']);
-    $("#" + ticks + "_ticks #fila_11 ").html(occ['risk_fila'][1]['quantity']);
-    $("#" + ticks + "_ticks #fila_10 ").html(occ['risk_fila'][1]['price']);
-    $("#" + ticks + "_ticks #fila_21 ").html(occ['risk_fila'][2]['quantity']);
-    $("#" + ticks + "_ticks #fila_20 ").html(occ['risk_fila'][2]['price']);
-    $("#" + ticks + "_ticks #fila_31 ").html(occ['risk_fila'][3]['quantity']);
-    $("#" + ticks + "_ticks #fila_30 ").html(occ['risk_fila'][3]['price']);
-    $("#" + ticks + "_ticks #fila_41 ").html(occ['risk_fila'][4]['quantity']);
-    $("#" + ticks + "_ticks #fila_40 ").html(occ['risk_fila'][4]['price']);
+    $("#" + ticks + "_ticks #risk_stop_50 ").html(risco_stop['bid_quantity_0'] + risco_stop['bid_quantity_1'] + risco_stop['bid_quantity_2'] + risco_stop['bid_quantity_3'] + risco_stop['bid_quantity_4']);
+
+    $("#" + ticks + "_ticks #fila_01 ").html(risk_fila['bid_quantity_0']);
+    $("#" + ticks + "_ticks #fila_00 ").html(risk_fila['bid_price_0']);
+    $("#" + ticks + "_ticks #fila_11 ").html(risk_fila['bid_quantity_1']);
+    $("#" + ticks + "_ticks #fila_10 ").html(risk_fila['bid_price_1']);
+    $("#" + ticks + "_ticks #fila_21 ").html(risk_fila['bid_quantity_2']);
+    $("#" + ticks + "_ticks #fila_20 ").html(risk_fila['bid_price_2']);
+    $("#" + ticks + "_ticks #fila_31 ").html(risk_fila['bid_quantity_3']);
+    $("#" + ticks + "_ticks #fila_30 ").html(risk_fila['bid_price_3']);
+    $("#" + ticks + "_ticks #fila_41 ").html(risk_fila['bid_quantity_4']);
+    $("#" + ticks + "_ticks #fila_40 ").html(risk_fila['bid_price_4']);
     $("#" + ticks + "_ticks #fila_50 ").html('');
-    $("#" + ticks + "_ticks #fila_51 ").html(occ['risk_fila'][0]['quantity'] +
-        occ['risk_fila'][1]['quantity'] +
-        occ['risk_fila'][2]['quantity'] +
-        occ['risk_fila'][3]['quantity'] +
-        occ['risk_fila'][4]['quantity']);
+    $("#" + ticks + "_ticks #fila_51 ").html(risk_fila['bid_quantity_0'] + risk_fila['bid_quantity_1'] + risk_fila['bid_quantity_2'] + risk_fila['bid_quantity_3'] + risk_fila['bid_quantity_4']);
 }
 
 function disp_risk_v() {
     var template = "<div id='disp_risk'> <table class='mdl-data-table  mdl-data-table--selectable mdl-shadow--2dp mdl-cell mdl-cell--2-col'> <thead> <tr> <th class='border'>Disponível</th> <th class='border'>Preço</th> <th class='border'>Preço</th> <th class='border'>Risco</th> </tr> </thead> <tbody> <tr> <td id='disp_00' class='border'>xxxx</td> <td id='disp_01' class='border'>xxxx</td> <td id='risk_00' class='border'>xxxx</td> <td id='risk_01' class='border'>xxxx</td> </tr> <tr> <td id='disp_10' class='border'>xxxx</td> <td id='disp_11' class='border'>xxxx</td> <td id='risk_10' class='border'>xxxx</td> <td id='risk_11' class='border'>xxxx</td> </tr> <tr> <td id='disp_20' class='border'>xxxx</td> <td id='disp_21' class='border'>xxxx</td> <td id='risk_20' class='border'>xxxx</td> <td id='risk_21' class='border'>xxxx</td> </tr> <tr> <td id='disp_30' class='border'>xxxx</td> <td id='disp_31' class='border'>xxxx</td> <td id='risk_30' class='border'>xxxx</td> <td id='risk_31' class='border'>xxxx</td> </tr> <tr> <td id='disp_40' class='border'>xxxx</td> <td id='disp_41' class='border'>xxxx</td> <td id='risk_40' class='border'>xxxx</td> <td id='risk_41' class='border'>xxxx</td> </tr> <tr> <td id='disp_50' class='border'>xxxx</td> <td id='disp_51' class='border'></td> <td id='risk_50' class='border'></td> <td id='risk_51' class='border'>xxxx</td> </tr> </tbody> </table> <table class='mdl-data-table  mdl-data-table--selectable mdl-shadow--2dp mdl-cell mdl-cell--2-col'> <thead> <tr> <th class='border'>Fila</th> <th class='border'>Preço</th> <th class='border'>Preço</th> <th class='border'>Risc Stop</th> </tr> </thead> <tbody> <tr> <td id='fila_00'        class='border'>xxxx</td> <td id='fila_01'        class='border'>xxxx</td> <td id='risk_stop_00'   class='border'>xxxx</td> <td id='risk_stop_01'   class='border'>xxxx</td> </tr> <tr> <td id='fila_10'        class='border'>xxxx</td> <td id='fila_11'        class='border'>xxxx</td> <td id='risk_stop_10'   class='border'>xxxx</td> <td id='risk_stop_11'   class='border'>xxxx</td> </tr> <tr> <td id='fila_20'        class='border'>xxxx</td> <td id='fila_21'        class='border'>xxxx</td> <td id='risk_stop_20'   class='border'>xxxx</td> <td id='risk_stop_21'   class='border'>xxxx</td> </tr> <tr> <td id='fila_30'        class='border'>xxxx</td> <td id='fila_31'        class='border'>xxxx</td> <td id='risk_stop_30'   class='border'>xxxx</td> <td id='risk_stop_31'   class='border'>xxxx</td> </tr> <tr> <td id='fila_40'        class='border'>xxxx</td> <td id='fila_41'        class='border'>xxxx</td> <td id='risk_stop_40'   class='border'>xxxx</td> <td id='risk_stop_41'   class='border'>xxxx</td> </tr> <tr> <td id='fila_50'        class='border'>xxxx</td> <td id='fila_51'        class='border'></td> <td id='risk_stop_50'   class='border'></td> <td id='risk_stop_51'   class='border'>xxxx</td> </tr> </tbody> </table> </div>";
     $("#disp_risk").html(template);
-    $("#" + ticks + "_ticks #disp_01 ").html(occ['disponivel'][0]['price']);
-    $("#" + ticks + "_ticks #disp_00 ").html(occ['disponivel'][0]['quantity']);
-    $("#" + ticks + "_ticks #disp_11 ").html(occ['disponivel'][1]['price']);
-    $("#" + ticks + "_ticks #disp_10 ").html(occ['disponivel'][1]['quantity']);
-    $("#" + ticks + "_ticks #disp_21 ").html(occ['disponivel'][2]['price']);
-    $("#" + ticks + "_ticks #disp_20 ").html(occ['disponivel'][2]['quantity']);
-    $("#" + ticks + "_ticks #disp_31 ").html(occ['disponivel'][3]['price']);
-    $("#" + ticks + "_ticks #disp_30 ").html(occ['disponivel'][3]['quantity']);
-    $("#" + ticks + "_ticks #disp_41 ").html(occ['disponivel'][4]['price']);
-    $("#" + ticks + "_ticks #disp_40 ").html(occ['disponivel'][4]['quantity']);
+    $("#" + ticks + "_ticks #disp_00 ").html(disponivel['bid_quantity_0']);
+    $("#" + ticks + "_ticks #disp_01 ").html(disponivel['bid_price_0']);
+    $("#" + ticks + "_ticks #disp_10 ").html(disponivel['bid_quantity_1']);
+    $("#" + ticks + "_ticks #disp_11 ").html(disponivel['bid_price_1']);
+    $("#" + ticks + "_ticks #disp_20 ").html(disponivel['bid_quantity_2']);
+    $("#" + ticks + "_ticks #disp_21 ").html(disponivel['bid_price_2']);
+    $("#" + ticks + "_ticks #disp_30 ").html(disponivel['bid_quantity_3']);
+    $("#" + ticks + "_ticks #disp_31 ").html(disponivel['bid_price_3']);
+    $("#" + ticks + "_ticks #disp_40 ").html(disponivel['bid_quantity_4']);
+    $("#" + ticks + "_ticks #disp_41 ").html(disponivel['bid_price_4']);
     $("#" + ticks + "_ticks #disp_51 ").html('');
-    $("#" + ticks + "_ticks #disp_50 ").html(occ['disponivel'][0]['quantity'] +
-        occ['disponivel'][1]['quantity'] +
-        occ['disponivel'][2]['quantity'] +
-        occ['disponivel'][3]['quantity'] +
-        occ['disponivel'][4]['quantity']);
-    $("#" + ticks + "_ticks #risk_01 ").html(occ['risco'][0]['quantity']);
-    $("#" + ticks + "_ticks #risk_00 ").html(occ['risco'][0]['price']);
-    $("#" + ticks + "_ticks #risk_11 ").html(occ['risco'][1]['quantity']);
-    $("#" + ticks + "_ticks #risk_10 ").html(occ['risco'][1]['price']);
-    $("#" + ticks + "_ticks #risk_21 ").html(occ['risco'][2]['quantity']);
-    $("#" + ticks + "_ticks #risk_20 ").html(occ['risco'][2]['price']);
-    $("#" + ticks + "_ticks #risk_31 ").html(occ['risco'][3]['quantity']);
-    $("#" + ticks + "_ticks #risk_30 ").html(occ['risco'][3]['price']);
-    $("#" + ticks + "_ticks #risk_41 ").html(occ['risco'][4]['quantity']);
-    $("#" + ticks + "_ticks #risk_40 ").html(occ['risco'][4]['price']);
+    $("#" + ticks + "_ticks #disp_50 ").html(disponivel['bid_quantity_0'] + disponivel['bid_quantity_1'] + disponivel['bid_quantity_2'] + disponivel['bid_quantity_3'] + disponivel['bid_quantity_4']);
+
+    $("#" + ticks + "_ticks #risk_00 ").html(risco['bid_price_0']);
+    $("#" + ticks + "_ticks #risk_01 ").html(risco['bid_quantity_0']);
+    $("#" + ticks + "_ticks #risk_10 ").html(risco['bid_price_1']);
+    $("#" + ticks + "_ticks #risk_11 ").html(risco['bid_quantity_1']);
+    $("#" + ticks + "_ticks #risk_20 ").html(risco['bid_price_2']);
+    $("#" + ticks + "_ticks #risk_21 ").html(risco['bid_quantity_2']);
+    $("#" + ticks + "_ticks #risk_30 ").html(risco['bid_price_3']);
+    $("#" + ticks + "_ticks #risk_31 ").html(risco['bid_quantity_3']);
+    $("#" + ticks + "_ticks #risk_40 ").html(risco['bid_price_4']);
+    $("#" + ticks + "_ticks #risk_41 ").html(risco['bid_quantity_4']);
     $("#" + ticks + "_ticks #risk_50 ").html('');
-    $("#" + ticks + "_ticks #risk_51 ").html(occ['risco'][0]['quantity'] +
-        occ['risco'][1]['quantity'] +
-        occ['risco'][2]['quantity'] +
-        occ['risco'][3]['quantity'] +
-        occ['risco'][4]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_00 ").html(occ['risco_stop'][0]['price']);
-    $("#" + ticks + "_ticks #risk_stop_01 ").html(occ['risco_stop'][0]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_10 ").html(occ['risco_stop'][1]['price']);
-    $("#" + ticks + "_ticks #risk_stop_11 ").html(occ['risco_stop'][1]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_20 ").html(occ['risco_stop'][2]['price']);
-    $("#" + ticks + "_ticks #risk_stop_21 ").html(occ['risco_stop'][2]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_30 ").html(occ['risco_stop'][3]['price']);
-    $("#" + ticks + "_ticks #risk_stop_31 ").html(occ['risco_stop'][3]['quantity']);
-    $("#" + ticks + "_ticks #risk_stop_40 ").html(occ['risco_stop'][4]['price']);
-    $("#" + ticks + "_ticks #risk_stop_41 ").html(occ['risco_stop'][4]['quantity']);
+    $("#" + ticks + "_ticks #risk_51 ").html(risco['bid_quantity_0'] + risco['bid_quantity_1'] + risco['bid_quantity_2'] + risco['bid_quantity_3'] + risco['bid_quantity_4']);
+
+    $("#" + ticks + "_ticks #risk_stop_01 ").html(risco_stop['bid_quantity_0']);
+    $("#" + ticks + "_ticks #risk_stop_00 ").html(risco_stop['bid_price_0']);
+    $("#" + ticks + "_ticks #risk_stop_11 ").html(risco_stop['bid_quantity_1']);
+    $("#" + ticks + "_ticks #risk_stop_10 ").html(risco_stop['bid_price_1']);
+    $("#" + ticks + "_ticks #risk_stop_21 ").html(risco_stop['bid_quantity_2']);
+    $("#" + ticks + "_ticks #risk_stop_20 ").html(risco_stop['bid_price_2']);
+    $("#" + ticks + "_ticks #risk_stop_31 ").html(risco_stop['bid_quantity_3']);
+    $("#" + ticks + "_ticks #risk_stop_30 ").html(risco_stop['bid_price_3']);
+    $("#" + ticks + "_ticks #risk_stop_41 ").html(risco_stop['bid_quantity_4']);
+    $("#" + ticks + "_ticks #risk_stop_40 ").html(risco_stop['bid_price_4']);
     $("#" + ticks + "_ticks #risk_stop_50 ").html('');
-    $("#" + ticks + "_ticks #risk_stop_51 ").html(occ['risco_stop'][0]['quantity'] +
-        occ['risco_stop'][1]['quantity'] +
-        occ['risco_stop'][2]['quantity'] +
-        occ['risco_stop'][3]['quantity'] +
-        occ['risco_stop'][4]['quantity']);
-    $("#" + ticks + "_ticks #fila_00 ").html(occ['risk_fila'][0]['quantity']);
-    $("#" + ticks + "_ticks #fila_01 ").html(occ['risk_fila'][0]['price']);
-    $("#" + ticks + "_ticks #fila_10 ").html(occ['risk_fila'][1]['quantity']);
-    $("#" + ticks + "_ticks #fila_11 ").html(occ['risk_fila'][1]['price']);
-    $("#" + ticks + "_ticks #fila_20 ").html(occ['risk_fila'][2]['quantity']);
-    $("#" + ticks + "_ticks #fila_21 ").html(occ['risk_fila'][2]['price']);
-    $("#" + ticks + "_ticks #fila_30 ").html(occ['risk_fila'][3]['quantity']);
-    $("#" + ticks + "_ticks #fila_31 ").html(occ['risk_fila'][3]['price']);
-    $("#" + ticks + "_ticks #fila_40 ").html(occ['risk_fila'][4]['quantity']);
-    $("#" + ticks + "_ticks #fila_41 ").html(occ['risk_fila'][4]['price']);
+    $("#" + ticks + "_ticks #risk_stop_51 ").html(risco_stop['bid_quantity_0'] + risco_stop['bid_quantity_1'] + risco_stop['bid_quantity_2'] + risco_stop['bid_quantity_3'] + risco_stop['bid_quantity_4']);
+
+    $("#" + ticks + "_ticks #fila_01 ").html(risk_fila['bid_price_0']);
+    $("#" + ticks + "_ticks #fila_00 ").html(risk_fila['bid_quantity_0']);
+    $("#" + ticks + "_ticks #fila_11 ").html(risk_fila['bid_price_1']);
+    $("#" + ticks + "_ticks #fila_10 ").html(risk_fila['bid_quantity_1']);
+    $("#" + ticks + "_ticks #fila_21 ").html(risk_fila['bid_price_2']);
+    $("#" + ticks + "_ticks #fila_20 ").html(risk_fila['bid_quantity_2']);
+    $("#" + ticks + "_ticks #fila_31 ").html(risk_fila['bid_price_3']);
+    $("#" + ticks + "_ticks #fila_30 ").html(risk_fila['bid_quantity_3']);
+    $("#" + ticks + "_ticks #fila_41 ").html(risk_fila['bid_price_4']);
+    $("#" + ticks + "_ticks #fila_40 ").html(risk_fila['bid_quantity_4']);
     $("#" + ticks + "_ticks #fila_51 ").html('');
-    $("#" + ticks + "_ticks #fila_50 ").html(occ['risk_fila'][0]['quantity'] +
-        occ['risk_fila'][1]['quantity'] +
-        occ['risk_fila'][2]['quantity'] +
-        occ['risk_fila'][3]['quantity'] +
-        occ['risk_fila'][4]['quantity']);
+    $("#" + ticks + "_ticks #fila_50 ").html(risk_fila['bid_quantity_0'] + risk_fila['bid_quantity_1'] + risk_fila['bid_quantity_2'] + risk_fila['bid_quantity_3'] + risk_fila['bid_quantity_4']);
 }
 
-function spreadZeradoGeral(segundos, local,side) {
-     
-    var qaddw           = occ[local]['paddw']['qaddw'];
-    var qaddw_dc        = (1 * getValueByKey_chart_1( "snap_6" , "qaddw_dell"   )) + (1 * getValueByKey_chart_1( "snap_6" , "qaddw_change" )) ;
-    var qaddw_add       = getValueByKey_chart_1     ( "snap_6" , "qaddw_add"    );
-    var qaddw_dccanc    = getValueByKey_chart_1     ( "snap_6" , "qaddw_cancel" ) + qaddw_dc;
-    
-    var qaddsw          = occ[local]['paddsw']['qaddsw'];
-    var qaddsw_dc       = (1 * getValueByKey_chart_1( "snap_6" , "qaddsw_dell"   )) + (1 * getValueByKey_chart_1( "snap_6" , "qaddsw_change" )) ;
-    var qaddsw_add      = getValueByKey_chart_1     ( "snap_6" , "qaddsw_add"    );
-    var qaddsw_dccanc   = getValueByKey_chart_1     ( "snap_6" , "qaddsw_cancel" ) + qaddsw_dc;
-    
+function spreadZeradoGeral(segundos, local, side) {
+
+    var qaddw           = data['qaddw'];
+    var qaddw_dc        = snap_2['qaddw_dell'] + snap_2['qaddw_change'];
+    var qaddw_add       = snap_2['qaddw_add'];
+    var qaddw_dccanc    = snap_2['qaddw_cancel'] + qaddw_dc;
+
+    var qaddsw          = data['qaddsw'];
+    var qaddsw_dc       = snap_2['qaddsw_dell'] + snap_2['qaddsw_change'];
+    var qaddsw_add      = snap_2['qaddsw_add'];
+    var qaddsw_dccanc   = snap_2['qaddsw_cancel'] + qaddsw_dc;
+
     // SPREAD ZERADO QADDW
-    $("#" + ticks + "_ticks #" + segundos + " #sz_paddw ").html(occ[local]['paddw']['paddw']);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_qaddw ").html(qaddw);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddw ").html(qaddw_dc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddw ").html(qaddw_dccanc - qaddw_dc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_adicionado_qaddw ").html(qaddw_add);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddw ").html( qaddw_dccanc );
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddw").html( qaddw_dc );
-    $("#" + ticks + "_ticks #" + segundos + " #sz_calculo ").html(occ[local]['paddw']['Tipo de Cálculo']);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_financeiro ").html(occ[local]['paddw']['Financeiro']);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_paddsw ").html(occ[local]['paddsw']['paddsw']);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_qaddsw ").html(qaddsw);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddsw ").html(qaddsw_dc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddsw ").html(qaddsw_dccanc - qaddsw_dc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_adicionado_qaddsw ").html(qaddsw_add);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddsw ").html( qaddsw_dccanc );
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddsw ").html( qaddsw_dc );
-    
-    if (occ[local]['paddsw']['teria_lucro'])
+    $("#" + ticks + "_ticks #" + segundos + " #sz_paddw                     ").html(data['paddw']);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qaddw                     ").html(qaddw);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddw            ").html(qaddw_dc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddw           ").html(qaddw_dccanc - qaddw_dc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_adicionado_qaddw          ").html(qaddw_add);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddw         ").html(qaddw_dccanc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddw    ").html(qaddw_dc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_calculo                   ").html(data['paddw_calculo']);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_financeiro                ").html(data['paddw_financeiro']);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_paddsw                    ").html(data['paddsw']);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qaddsw                    ").html(qaddsw);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddsw           ").html(qaddsw_dc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddsw          ").html(qaddsw_dccanc - qaddsw_dc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_adicionado_qaddsw         ").html(qaddsw_add);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddsw        ").html(qaddsw_dccanc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddsw   ").html(qaddsw_dc);
+
+    if (data['paddsw_lucro'] == 1)
         $("#" + ticks + "_ticks #" + segundos + " #sz_teria_lucro ").html("Sim");
     else
         $("#" + ticks + "_ticks #" + segundos + " #sz_teria_lucro ").html("Não");
 }
 
+function break_str(index,str) {
+    switch(index){
+        case 0:
+            return str.split(',')[0].replace('[','');
+        break;
+        case 1:
+            return str.split(',')[1].replace(']','');
+        break;
+    }
+}
+
 function spreadZerado3Segundos() {
-    $("#" + ticks + "_ticks #frequencia_min ").html(occ['spread_zerado_segundos']['frequencia'][0]);
-    $("#" + ticks + "_ticks #frequencia_max ").html(occ['spread_zerado_segundos']['frequencia'][1]);
-    spreadZeradoGeral('segundos_sim', 'spread_zerado_segundos',2);
+    $("#" + ticks + "_ticks #frequencia_min ").html(break_str(0,snap_6['frequencia']));
+    $("#" + ticks + "_ticks #frequencia_max ").html(break_str(1,snap_6['frequencia']));
+
+    var qaddw           = data['qaddw'];
+    var qaddw_dc        = (1 * snap_6['qaddw_dell']) + (1 * snap_6['qaddw_change']);
+    var qaddw_add       = snap_6['qaddw_add'];
+    var qaddw_dccanc    = snap_6['qaddw_cancel'] + qaddw_dc;
+
+    var qaddsw          = data['qaddsw'];
+    var qaddsw_dc       = snap_6['qaddsw_dell'] + snap_6['qaddsw_change'];
+    var qaddsw_add      = snap_6['qaddsw_add'];
+    var qaddsw_dccanc   = snap_6['qaddsw_cancel'] + qaddsw_dc;
+
+    // SPREAD ZERADO QADDW
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_paddw                     ").html(data['paddw']);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qaddw                     ").html(qaddw);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_removido_qaddw            ").html(qaddw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_cancelado_qaddw           ").html(qaddw_dccanc - qaddw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_adicionado_qaddw          ").html(qaddw_add);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_qaddw         ").html(qaddw_dccanc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_real_qaddw    ").html(qaddw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_calculo                   ").html(data['paddw_calculo_plus']);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_financeiro                ").html(data['paddw_financeiro_plus']);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_paddsw                    ").html(data['paddsw']);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qaddsw                    ").html(qaddsw);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_removido_qaddsw           ").html(qaddsw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_cancelado_qaddsw          ").html(qaddsw_dccanc - qaddsw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_adicionado_qaddsw         ").html(qaddsw_add);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_qaddsw        ").html(qaddsw_dccanc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_real_qaddsw   ").html(qaddsw_dc);
+
+    if (data['paddsw_lucro_plus'])
+        $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_teria_lucro ").html("Sim");
+    else
+        $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_teria_lucro ").html("Não");
 }
 
 function set_snap_c(index) {
+
+
+    var tmp;
+
+    switch (index) {
+        case 1:
+            tmp = snap_1_shot;
+            break;
+        case 2:
+            tmp = snap_2_shot;
+            break;
+        case 3:
+            tmp = snap_3_shot;
+            break;
+        case 4:
+            tmp = snap_4_shot;
+            break;
+        case 5:
+            tmp = snap_5_shot;
+            break;
+        case 6:
+            tmp = snap_6_shot;
+            break;
+        case 7:
+            tmp = snap_7_shot;
+            break;
+    }
+
     var soma_l = 0;
     var soma_r = 0;
     for (var i = 0; i < 5; i++) {
-        var a = occ['snap_shots']['mbp_snap_' + index][i][1];
-        var b = occ['snap_shots']['mbp_snap_' + index][i][0];
-        var c = occ['snap_shots']['mbp_snap_' + index][i][2];
-        var d = occ['snap_shots']['mbp_snap_' + index][i][3];
-        soma_l += a;
+        var a = tmp['bid_price_' + i];
+        var b = tmp['bid_quantity_' + i];
+        var c = tmp['ask_price_' + i];
+        var d = tmp['ask_quantity_' + i];
+
+        soma_l += b;
         soma_r += d;
-        $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "0").html(a);
-        $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "1").html(b);
+        $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "0").html(b);
+        $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "1").html(a);
         $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "2").html(c);
         $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "3").html(d);
     }
@@ -245,21 +308,45 @@ function set_snap_c(index) {
 }
 
 function set_snap_v(index) {
+    var tmp;
+    switch (index) {
+        case 1:
+            tmp = snap_1_shot;
+            break;
+        case 2:
+            tmp = snap_2_shot;
+            break;
+        case 3:
+            tmp = snap_3_shot;
+            break;
+        case 4:
+            tmp = snap_4_shot;
+            break;
+        case 5:
+            tmp = snap_5_shot;
+            break;
+        case 6:
+            tmp = snap_6_shot;
+            break;
+        case 7:
+            tmp = snap_7_shot;
+            break;
+    }
     var soma_l = 0;
     var soma_r = 0;
+    
     for (var i = 0; i < 5; i++) {
-        var a = occ['snap_shots']['mbp_snap_' + index][i][1];
-        var b = occ['snap_shots']['mbp_snap_' + index][i][0];
-        var c = occ['snap_shots']['mbp_snap_' + index][i][2];
-        var d = occ['snap_shots']['mbp_snap_' + index][i][3];
-        soma_l += a;
-        soma_r += d;
+        var a = tmp['bid_price_' + i];
+        var b = tmp['bid_quantity_' + i];
+        var c = tmp['ask_price_' + i];
+        var d = tmp['ask_quantity_' + i];
 
-        $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "0").html(a);
-        $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "1").html(b);
+        soma_l += b;
+        soma_r += d;
+        $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "0").html(b);
+        $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "1").html(a);
         $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "2").html(c);
         $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "3").html(d);
-
     }
     $("#" + ticks + "_ticks td#snap_" + index + "_50").html(soma_l);
     $("#" + ticks + "_ticks td#snap_" + index + "_53").html(soma_r);
@@ -297,174 +384,129 @@ function snapshots_v() {
     set_snap_v(7);
 }
 
-function getValueByKey(name, key) {
-    for (var i = 0; i < occ['snap_shots']['chart_2'].length; i++) {
-        if (occ['snap_shots']['chart_2'][i]['name'] == name) {
-            return occ['snap_shots']['chart_2'][i][key];
-        }
-    }
-}
-
-function getValueByKey_chart_1(name, key) {
-    for (var i = 0; i < occ['snap_shots']['chart_1'].length; i++) {
-        if (occ['snap_shots']['chart_1'][i]['name'] == name) {
-            return occ['snap_shots']['chart_1'][i][key];
-        }
-    }
-}
-
-function getValueByIndex(name, key) {
-    for (var i = 0; i < occ['snap_shots']['chart_1'].length; i++) {
-        if (occ['snap_shots']['chart_1'][i]['name'] == name) {
-            return i;
-        }
-    }
-}
-
-function getValueByKeyOFI(name, key) {
-    for (var i = 0; i < occ['snap_shots']['chart_2'].length; i++) {
-        if (occ['snap_shots']['chart_2'][i]['name'] == name) {
-            if (occ['informacoes']['side'] == 'C')
-                return occ['snap_shots']['chart_2'][i][key][0];
-            else
-                return occ['snap_shots']['chart_2'][i][key][0];
-        }
-    }
-}
-
-function contra_ou_afavor(viewap) {
-    if (occ['informacoes']['side'] == "C") {
-        if (viewap >= occ['informacoes']['paddi'])
-            return "A favor"
+function vwap_status(vwap) {
+    if (data['side'] == "C")
+        if (vwap >= data['paddi'])
+            return "A favor";
         else
-            return "Contra"
-    } else {
-        if (viewap < occ['informacoes']['paddi'])
-            return "A favor"
+            return "Contra";
+    else 
+        if (vwap < data['paddi'])
+            return "A favor";
         else
-            return "Contra"
-    }
-}
-
-function cem_porcento(argument) {
-    // var qaddw = occ['Spread_zerado']['paddw']['qaddw'];
-    // var qaddw_dc = argument;
-    // var percent = ((qaddw_dc * 100) / qaddw).toFixed(2);
-    return argument;
+            return "Contra";
 }
 
 function table_of_analisys() {
     //Porcentagem removida no QADDW/WDO:
-    $("#" + ticks + "_ticks td#pqaddw_1").html(cem_porcento(getValueByKey("snap_2", "removidos_no_qaddw") + "%"));
-    $("#" + ticks + "_ticks td#pqaddw_2").html(cem_porcento(getValueByKey("snap_3", "removidos_no_qaddw") + "%"));
-    $("#" + ticks + "_ticks td#pqaddw_3").html(cem_porcento(getValueByKey("snap_4", "removidos_no_qaddw") + "%"));
-    $("#" + ticks + "_ticks td#pqaddw_4").html(cem_porcento(getValueByKey("snap_5", "removidos_no_qaddw") + "%"));
-    $("#" + ticks + "_ticks td#pqaddw_5").html(cem_porcento(getValueByKey("snap_6", "removidos_no_qaddw") + "%"));
+    $("#" + ticks + "_ticks td#pqaddw_1").html(snap_2['qaddw_dell'] + snap_2['qaddw_change']);
+    $("#" + ticks + "_ticks td#pqaddw_2").html(snap_3['qaddw_dell'] + snap_3['qaddw_change']);
+    $("#" + ticks + "_ticks td#pqaddw_3").html(snap_4['qaddw_dell'] + snap_4['qaddw_change']);
+    $("#" + ticks + "_ticks td#pqaddw_4").html(snap_5['qaddw_dell'] + snap_5['qaddw_change']);
+    $("#" + ticks + "_ticks td#pqaddw_5").html(snap_6['qaddw_dell'] + snap_6['qaddw_change']);
     $("#" + ticks + "_ticks td#pqaddw_6").html("??");
 
 
     //Tinha buraco no book na hora do ADD?
-    $("#" + ticks + "_ticks td#tem_buraco_0").html(getValueByKey("snap_1", "tinha_buraco") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#tem_buraco_1").html(getValueByKey("snap_2", "tinha_buraco") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#tem_buraco_2").html(getValueByKey("snap_3", "tinha_buraco") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#tem_buraco_3").html(getValueByKey("snap_4", "tinha_buraco") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#tem_buraco_4").html(getValueByKey("snap_5", "tinha_buraco") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#tem_buraco_5").html(getValueByKey("snap_6", "tinha_buraco") ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#tem_buraco_0").html(snap_1['tinha_buraco']);
+    $("#" + ticks + "_ticks td#tem_buraco_1").html(snap_2['tinha_buraco']);
+    $("#" + ticks + "_ticks td#tem_buraco_2").html(snap_3['tinha_buraco']);
+    $("#" + ticks + "_ticks td#tem_buraco_3").html(snap_4['tinha_buraco']);
+    $("#" + ticks + "_ticks td#tem_buraco_4").html(snap_5['tinha_buraco']);
+    $("#" + ticks + "_ticks td#tem_buraco_5").html(snap_6['tinha_buraco']);
     $("#" + ticks + "_ticks td#tem_buraco_6").html("??");
 
     //Qual o OFI (QADD - Outro lado)
-    $("#" + ticks + "_ticks td#ofi_0").html(getValueByKeyOFI("snap_1", "ofi"));
-    $("#" + ticks + "_ticks td#ofi_1").html(getValueByKeyOFI("snap_2", "ofi"));
-    $("#" + ticks + "_ticks td#ofi_2").html(getValueByKeyOFI("snap_3", "ofi"));
-    $("#" + ticks + "_ticks td#ofi_3").html(getValueByKeyOFI("snap_4", "ofi"));
-    $("#" + ticks + "_ticks td#ofi_4").html(getValueByKeyOFI("snap_5", "ofi"));
-    $("#" + ticks + "_ticks td#ofi_5").html(getValueByKeyOFI("snap_6", "ofi"));
+    $("#" + ticks + "_ticks td#ofi_0").html(break_str(0,snap_1['ofi']));
+    $("#" + ticks + "_ticks td#ofi_1").html(break_str(0,snap_2['ofi']));
+    $("#" + ticks + "_ticks td#ofi_2").html(break_str(0,snap_3['ofi']));
+    $("#" + ticks + "_ticks td#ofi_3").html(break_str(0,snap_4['ofi']));
+    $("#" + ticks + "_ticks td#ofi_4").html(break_str(0,snap_5['ofi']));
+    $("#" + ticks + "_ticks td#ofi_5").html(break_str(0,snap_6['ofi']));
     $("#" + ticks + "_ticks td#ofi_6").html("??");
 
     //Houve DELL no ADD?
     var last = 0
     var diff = 0
 
-    diff = occ['snap_shots']['chart_1'][getValueByIndex("snap_1", "qadd_dell")]['qadd_dell'] - last
-    last = occ['snap_shots']['chart_1'][getValueByIndex("snap_1", "qadd_dell")]['qadd_dell']
+    diff = snap_1['qadd_dell'] - last
+    last = snap_1['qadd_dell']
     $("#" + ticks + "_ticks td#dell_add_0").html(diff > 0 ? "Sim" : "Não");
 
-    diff = occ['snap_shots']['chart_1'][getValueByIndex("snap_2", "qadd_dell")]['qadd_dell'] - last
-    last = occ['snap_shots']['chart_1'][getValueByIndex("snap_2", "qadd_dell")]['qadd_dell']
+    diff = snap_2['qadd_dell'] - last
+    last = snap_2['qadd_dell']
     $("#" + ticks + "_ticks td#dell_add_1").html(diff > 0 ? "Sim" : "Não");
 
-    diff = occ['snap_shots']['chart_1'][getValueByIndex("snap_3", "qadd_dell")]['qadd_dell'] - last
-    last = occ['snap_shots']['chart_1'][getValueByIndex("snap_3", "qadd_dell")]['qadd_dell']
+    diff = snap_3['qadd_dell'] - last
+    last = snap_3['qadd_dell']
     $("#" + ticks + "_ticks td#dell_add_2").html(diff > 0 ? "Sim" : "Não");
 
-    diff = occ['snap_shots']['chart_1'][getValueByIndex("snap_4", "qadd_dell")]['qadd_dell'] - last
-    last = occ['snap_shots']['chart_1'][getValueByIndex("snap_4", "qadd_dell")]['qadd_dell']
+    diff = snap_4['qadd_dell'] - last
+    last = snap_4['qadd_dell']
     $("#" + ticks + "_ticks td#dell_add_3").html(diff > 0 ? "Sim" : "Não");
 
-    diff = occ['snap_shots']['chart_1'][getValueByIndex("snap_5", "qadd_dell")]['qadd_dell'] - last
-    last = occ['snap_shots']['chart_1'][getValueByIndex("snap_5", "qadd_dell")]['qadd_dell']
+    diff = snap_5['qadd_dell'] - last
+    last = snap_5['qadd_dell']
     $("#" + ticks + "_ticks td#dell_add_4").html(diff > 0 ? "Sim" : "Não");
 
-    diff = occ['snap_shots']['chart_1'][getValueByIndex("snap_6", "qadd_dell")]['qadd_dell'] - last
-    last = occ['snap_shots']['chart_1'][getValueByIndex("snap_6", "qadd_dell")]['qadd_dell']
+    diff = snap_6['qadd_dell'] - last
+    last = snap_6['qadd_dell']
     $("#" + ticks + "_ticks td#dell_add_5").html(diff > 0 ? "Sim" : "Não");
 
     //Teve iceberg após o DELL?
-    $("#" + ticks + "_ticks td#iceberg_0").html(getValueByKey("snap_1", "teve_iceberg_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#iceberg_1").html(getValueByKey("snap_2", "teve_iceberg_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#iceberg_2").html(getValueByKey("snap_3", "teve_iceberg_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#iceberg_3").html(getValueByKey("snap_4", "teve_iceberg_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#iceberg_4").html(getValueByKey("snap_5", "teve_iceberg_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#iceberg_5").html(getValueByKey("snap_6", "teve_iceberg_wdo") ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#iceberg_0").html(snap_1['teve_iceberg']);
+    $("#" + ticks + "_ticks td#iceberg_1").html(snap_2['teve_iceberg']);
+    $("#" + ticks + "_ticks td#iceberg_2").html(snap_3['teve_iceberg']);
+    $("#" + ticks + "_ticks td#iceberg_3").html(snap_4['teve_iceberg']);
+    $("#" + ticks + "_ticks td#iceberg_4").html(snap_5['teve_iceberg']);
+    $("#" + ticks + "_ticks td#iceberg_5").html(snap_6['teve_iceberg']);
 
     //Teve ADD secundário após o DELL?
-    $("#" + ticks + "_ticks td#add_secundario_0").html(getValueByKey("snap_1", "teve_add_secundario_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#add_secundario_1").html(getValueByKey("snap_2", "teve_add_secundario_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#add_secundario_2").html(getValueByKey("snap_3", "teve_add_secundario_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#add_secundario_3").html(getValueByKey("snap_4", "teve_add_secundario_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#add_secundario_4").html(getValueByKey("snap_5", "teve_add_secundario_wdo") ? "Sim" : "Não");
-    $("#" + ticks + "_ticks td#add_secundario_5").html(getValueByKey("snap_6", "teve_add_secundario_wdo") ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#add_secundario_0").html(snap_1['teve_add_secundario'])
+    $("#" + ticks + "_ticks td#add_secundario_1").html(snap_2['teve_add_secundario'])
+    $("#" + ticks + "_ticks td#add_secundario_2").html(snap_3['teve_add_secundario'])
+    $("#" + ticks + "_ticks td#add_secundario_3").html(snap_4['teve_add_secundario'])
+    $("#" + ticks + "_ticks td#add_secundario_4").html(snap_5['teve_add_secundario'])
+    $("#" + ticks + "_ticks td#add_secundario_5").html(snap_6['teve_add_secundario'])
 
     //O evento estava a favor ou contra o VWAP?
-    $("#" + ticks + "_ticks td#vwap_0").html(contra_ou_afavor(getValueByKey("snap_1", "vwap_contra")));
-    $("#" + ticks + "_ticks td#vwap_1").html(contra_ou_afavor(getValueByKey("snap_2", "vwap_contra")));
-    $("#" + ticks + "_ticks td#vwap_2").html(contra_ou_afavor(getValueByKey("snap_3", "vwap_contra")));
-    $("#" + ticks + "_ticks td#vwap_3").html(contra_ou_afavor(getValueByKey("snap_4", "vwap_contra")));
-    $("#" + ticks + "_ticks td#vwap_4").html(contra_ou_afavor(getValueByKey("snap_5", "vwap_contra")));
-    $("#" + ticks + "_ticks td#vwap_5").html(contra_ou_afavor(getValueByKey("snap_6", "vwap_contra")));
+    $("#" + ticks + "_ticks td#vwap_0").html(vwap_status(snap_1['vwap']));
+    $("#" + ticks + "_ticks td#vwap_1").html(vwap_status(snap_2['vwap']));
+    $("#" + ticks + "_ticks td#vwap_2").html(vwap_status(snap_3['vwap']));
+    $("#" + ticks + "_ticks td#vwap_3").html(vwap_status(snap_4['vwap']));
+    $("#" + ticks + "_ticks td#vwap_4").html(vwap_status(snap_5['vwap']));
+    $("#" + ticks + "_ticks td#vwap_5").html(vwap_status(snap_6['vwap']));
 
     //Frequência
-    $("#" + ticks + "_ticks td#frequencia_0").html("[" + getValueByKey("snap_1", "frequencia")[0] + "," + getValueByKey("snap_1", "frequencia")[1] + "]");
-    $("#" + ticks + "_ticks td#frequencia_1").html("[" + getValueByKey("snap_2", "frequencia")[0] + "," + getValueByKey("snap_2", "frequencia")[1] + "]");
-    $("#" + ticks + "_ticks td#frequencia_2").html("[" + getValueByKey("snap_3", "frequencia")[0] + "," + getValueByKey("snap_3", "frequencia")[1] + "]");
-    $("#" + ticks + "_ticks td#frequencia_3").html("[" + getValueByKey("snap_4", "frequencia")[0] + "," + getValueByKey("snap_4", "frequencia")[1] + "]");
-    $("#" + ticks + "_ticks td#frequencia_4").html("[" + getValueByKey("snap_5", "frequencia")[0] + "," + getValueByKey("snap_5", "frequencia")[1] + "]");
-    $("#" + ticks + "_ticks td#frequencia_5").html("[" + getValueByKey("snap_6", "frequencia")[0] + "," + getValueByKey("snap_6", "frequencia")[1] + "]");
+    $("#" + ticks + "_ticks td#frequencia_0").html(snap_1['frequencia']);
+    $("#" + ticks + "_ticks td#frequencia_1").html(snap_2['frequencia']);
+    $("#" + ticks + "_ticks td#frequencia_2").html(snap_3['frequencia']);
+    $("#" + ticks + "_ticks td#frequencia_3").html(snap_4['frequencia']);
+    $("#" + ticks + "_ticks td#frequencia_4").html(snap_5['frequencia']);
+    $("#" + ticks + "_ticks td#frequencia_5").html(snap_6['frequencia']);
 
-    //RPS 
-    $("#" + ticks + "_ticks td#rps_0").html(getValueByKey("snap_1", "rps_all"));
-    $("#" + ticks + "_ticks td#rps_1").html(getValueByKey("snap_2", "rps_all"));
-    $("#" + ticks + "_ticks td#rps_2").html(getValueByKey("snap_3", "rps_all"));
-    $("#" + ticks + "_ticks td#rps_3").html(getValueByKey("snap_4", "rps_all"));
-    $("#" + ticks + "_ticks td#rps_4").html(getValueByKey("snap_5", "rps_all"));
-    $("#" + ticks + "_ticks td#rps_5").html(getValueByKey("snap_6", "rps_all"));
+    //RPS
+    $("#" + ticks + "_ticks td#rps_0").html(snap_1['rps']);
+    $("#" + ticks + "_ticks td#rps_1").html(snap_2['rps']);
+    $("#" + ticks + "_ticks td#rps_2").html(snap_3['rps']);
+    $("#" + ticks + "_ticks td#rps_3").html(snap_4['rps']);
+    $("#" + ticks + "_ticks td#rps_4").html(snap_5['rps']);
+    $("#" + ticks + "_ticks td#rps_5").html(snap_6['rps']);
 
     //Somatório do saldo de C & V
-    $("#" + ticks + "_ticks td#saldo_0").html(getValueByKey("snap_1", "saldo_acumudado"));
-    $("#" + ticks + "_ticks td#saldo_1").html(getValueByKey("snap_2", "saldo_acumudado"));
-    $("#" + ticks + "_ticks td#saldo_2").html(getValueByKey("snap_3", "saldo_acumudado"));
-    $("#" + ticks + "_ticks td#saldo_3").html(getValueByKey("snap_4", "saldo_acumudado"));
-    $("#" + ticks + "_ticks td#saldo_4").html(getValueByKey("snap_5", "saldo_acumudado"));
-    $("#" + ticks + "_ticks td#saldo_5").html(getValueByKey("snap_6", "saldo_acumudado"));
-
+    $("#" + ticks + "_ticks td#saldo_0").html(snap_1['acumulado']);
+    $("#" + ticks + "_ticks td#saldo_1").html(snap_2['acumulado']);
+    $("#" + ticks + "_ticks td#saldo_2").html(snap_3['acumulado']);
+    $("#" + ticks + "_ticks td#saldo_3").html(snap_4['acumulado']);
+    $("#" + ticks + "_ticks td#saldo_4").html(snap_5['acumulado']);
+    $("#" + ticks + "_ticks td#saldo_5").html(snap_6['acumulado']);
 }
 
 function update() {
-    puts(occ)
 
     informacoes();
 
-    if (occ['informacoes']['side'] == 'C') {
+    if (data['side'] == 'C') {
         disp_risk_c();
         snapshots_c();
     } else {
@@ -473,7 +515,7 @@ function update() {
     }
 
     table_of_analisys();
-    spreadZeradoGeral('segundos_nao', 'Spread_zerado',1);
+    spreadZeradoGeral('segundos_nao', 'Spread_zerado', 1);
     spreadZerado3Segundos();
     drawChart();
     drawChart_rps();
@@ -499,34 +541,56 @@ function getLabel(arg) {
 
 function drawChart() {
     // Create and populate the data table.
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'x');
-    data.addColumn({
+    var data_google = new google.visualization.DataTable();
+    data_google.addColumn('string', 'x');
+    data_google.addColumn({
         type: 'string',
         role: 'annotation'
     });
-    data.addColumn({
+    data_google.addColumn({
         type: 'string',
         role: 'annotationText'
     });
-    data.addColumn('number', 'Qadd');
-    data.addColumn('number', 'Qaddw');
-    data.addColumn('number', 'QaddwC');
+    data_google.addColumn('number', 'Qadd');
+    data_google.addColumn('number', 'Qaddw');
+    data_google.addColumn('number', 'QaddwC');
+    
+    var a = data['qadd']  + snap_1['qadd_add'] -(snap_1['qadd_dell']  + snap_1['qadd_change']);
+    var b = data['qaddw'] + snap_1['qaddw_add'] -(snap_1['qaddw_dell'] + snap_1['qaddw_change']);
+    var c = data['qaddw'] + snap_1['qaddw_add'] -(snap_1['qaddw_dell'] + snap_1['qaddw_change'] + snap_1['qaddw_cancel']);
+    data_google.addRow([getLabel('snap_1'), '', '', a, b, c]);
+    
+    a = data['qadd']  + snap_2['qadd_add'] - (snap_2['qadd_dell']  + snap_2['qadd_change']);
+    b = data['qaddw'] + snap_2['qaddw_add'] - (snap_2['qaddw_dell'] + snap_2['qaddw_change']);
+    c = data['qaddw'] + snap_2['qaddw_add'] - (snap_2['qaddw_dell'] + snap_2['qaddw_change'] + snap_2['qaddw_cancel']);
+    data_google.addRow([getLabel('snap_2'), '', '', a, b, c]);
+    
+    a = data['qadd']  + snap_3['qadd_add'] - (snap_3['qadd_dell']  + snap_3['qadd_change']);
+    b = data['qaddw'] + snap_3['qaddw_add'] - (snap_3['qaddw_dell'] + snap_3['qaddw_change']);
+    c = data['qaddw'] + snap_3['qaddw_add'] - (snap_3['qaddw_dell'] + snap_3['qaddw_change'] + snap_3['qaddw_cancel']);
+    data_google.addRow([getLabel('snap_3'), '', '', a, b, c]);
+    
+    a = data['qadd']  + snap_4['qadd_add'] - (snap_4['qadd_dell']  + snap_4['qadd_change']);
+    b = data['qaddw'] + snap_4['qaddw_add'] - (snap_4['qaddw_dell'] + snap_4['qaddw_change']);
+    c = data['qaddw'] + snap_4['qaddw_add'] - (snap_4['qaddw_dell'] + snap_4['qaddw_change'] + snap_4['qaddw_cancel']);
+    data_google.addRow([getLabel('snap_4'), '', '', a, b, c]);
+    
+    a = data['qadd']  + snap_5['qadd_add'] - (snap_5['qadd_dell']  + snap_5['qadd_change']);
+    b = data['qaddw'] + snap_5['qaddw_add'] - (snap_5['qaddw_dell'] + snap_5['qaddw_change']);
+    c = data['qaddw'] + snap_5['qaddw_add'] - (snap_5['qaddw_dell'] + snap_5['qaddw_change'] + snap_5['qaddw_cancel']);
+    data_google.addRow([getLabel('snap_5'), '', '', a, b, c]);
+    
+    a = data['qadd']  + snap_6['qadd_add'] - (snap_6['qadd_dell']  + snap_6['qadd_change']);
+    b = data['qaddw'] + snap_6['qaddw_add'] - (snap_6['qaddw_dell'] + snap_6['qaddw_change']);
+    c = data['qaddw'] + snap_6['qaddw_add'] - (snap_6['qaddw_dell'] + snap_6['qaddw_change'] + snap_6['qaddw_cancel']);
+    data_google.addRow([getLabel('snap_6'), '', '', a, b, c]);
 
-    for (var i = 0; i < occ['snap_shots']['chart_1'].length; i++) {
-        if (occ['snap_shots']['chart_1'][i]['name'] != "snap_7") {
-            var name = getLabel(occ['snap_shots']['chart_1'][i]['name']);
-            var qadd_restante = occ['snap_shots']['chart_1'][i]['qadd_dell_and_change'];
-            var qaddw_restante = occ['snap_shots']['chart_1'][i]['qaddw_dell_and_change'];
-            var qaddw_restante_c = occ['snap_shots']['chart_1'][i]['qaddw_dell_and_change_cancel'];
-            // var qaddsw_restante = occ['snap_shots']['chart_1'][i]['qaddsw_dell'];
-            data.addRow([name, '', '', qadd_restante, qaddw_restante,qaddw_restante_c]);
-        }
-    }
+
+
 
     // Create and draw the visualization.
     new google.visualization.LineChart(document.getElementById('remotion_chart_' + ticks)).
-    draw(data, {
+    draw(data_google, {
         // curveType: 'function',
 
         vAxis: {
@@ -564,15 +628,12 @@ function drawChart_rps() {
     data.addColumn('number', 'Rps');
     data.addColumn('number', 'Saldo acumulado');
 
-    for (var i = 0; i < occ['snap_shots']['chart_2'].length; i++) {
-        if (occ['snap_shots']['chart_2'][i]['name'] != "snap_7") {
-            var name = getLabel(occ['snap_shots']['chart_2'][i]['name']);
-            var rps_all = occ['snap_shots']['chart_2'][i]['rps_all'];
-            var saldo_acumudado = occ['snap_shots']['chart_2'][i]['saldo_acumudado'];
-            // var qaddsw_restante = occ['snap_shots']['chart_1'][i]['qaddsw_dell'];
-            data.addRow([name, '', '', rps_all, saldo_acumudado]);
-        }
-    }
+    data.addRow([getLabel('snap_1'), '', '', snap_1['rps'], snap_1['acumudado']]);
+    data.addRow([getLabel('snap_2'), '', '', snap_1['rps'], snap_1['acumudado']]);
+    data.addRow([getLabel('snap_3'), '', '', snap_1['rps'], snap_1['acumudado']]);
+    data.addRow([getLabel('snap_4'), '', '', snap_1['rps'], snap_1['acumudado']]);
+    data.addRow([getLabel('snap_5'), '', '', snap_1['rps'], snap_1['acumudado']]);
+    data.addRow([getLabel('snap_6'), '', '', snap_1['rps'], snap_1['acumudado']]);
 
     // Create and draw the visualization.
     new google.visualization.LineChart(document.getElementById('rps_chart_' + ticks)).
@@ -599,71 +660,109 @@ function drawChart_rps() {
     });
 }
 
-function max(a, b) {
-    if (a > b)
-        return a;
-    else
-        return b;
-}
+function load_json(index) {
 
-// HANDLE FUNCTIONS
+    sync_count = 0;
 
-
-function load_json(index){
-    $.getJSON("https://qubox-ddkclaudio.c9users.io/"+index+".json", function(json) {
+    $.getJSON("https://qubox-ddkclaudio.c9users.io/infos/" + index + ".json", function(json) {
         data = json;
-        day = $("#day").html().replace("Estudos do Book - ", "");
-        find_occ();
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_2'] + ".json", function(snap_2_json) {
+            snap_2 = snap_2_json;
+            $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + snap_2['id_mbp'] + ".json", function(json) {
+                snap_2_shot = json;
+                sync();
+            });
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_3'] + ".json", function(snap_3_json) {
+            snap_3 = snap_3_json;
+            $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + snap_3['id_mbp'] + ".json", function(json) {
+                snap_3_shot = json;
+                sync();
+            });
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_4'] + ".json", function(snap_4_json) {
+            snap_4 = snap_4_json;
+            $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + snap_4['id_mbp'] + ".json", function(json) {
+                snap_4_shot = json;
+                sync();
+            });
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_5'] + ".json", function(snap_5_json) {
+            snap_5 = snap_5_json;
+            $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + snap_5['id_mbp'] + ".json", function(json) {
+                snap_5_shot = json;
+                sync();
+            });
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_6'] + ".json", function(snap_6_json) {
+            snap_6 = snap_6_json;
+            $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + snap_6['id_mbp'] + ".json", function(json) {
+                snap_6_shot = json;
+                sync();
+            });
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_7'] + ".json", function(snap_7_json) {
+            snap_7 = snap_7_json;
+            
+            $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + snap_7['id_mbp'] + ".json", function(json) {
+                snap_7_shot = json;
+                sync();
+            });
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/snapshots/" + data['snap_1'] + ".json", function(snap_1_json) {
+            snap_1 = snap_1_json;
+            $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + snap_1['id_mbp'] + ".json", function(json) {
+                snap_1_shot = json;
+                sync();
+            });
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + data['disponivel'] + ".json", function(disponivel_json) {
+            disponivel = disponivel_json;
+            sync();
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + data['risco'] + ".json", function(risco_json) {
+            risco = risco_json;
+            sync();
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + data['risco_stop'] + ".json", function(risco_stop_json) {
+            risco_stop = risco_stop_json;
+            sync();
+        });
+
+        $.getJSON("https://qubox-ddkclaudio.c9users.io/mbps/" + data['risk_fila'] + ".json", function(risk_fila_json) {
+            risk_fila = risk_fila_json;
+            sync();
+        });
     });
 }
 
+function sync() {
+    sync_count++;
+    if (sync_count == 11)
+        update();
+}
 
 function tab_ticks(arg) {
+
     ticks = arg;
 }
 
 function select_occ(arg) {
-    occ = occs[arg + ""];
-    update();
-}
 
-function find_occ() {
-    var local_occ;
-
-    var types = []
-
-    types.push(data['J17']);
-    types.push(data['K17']);
-    types.push(data['M17']);
-    types.push(data['M18']);
-
-    for (i = 0; i < types.length; i++) {
-        var type = types[i];
-        if (type != null) {
-            for (j = 0; j < type.length; j++) {
-                var local_day = type[j];
-                if (local_day['day'] == day) {
-
-
-                    for (k = 2; k < 11; k++) {
-                        var local_tick = local_day['' + k];
-
-                        if (local_tick['more50'] != null && local_tick['more50'].length > 0)
-                            local_tick['more50'].forEach(function(entry) {
-                                occs[entry['informacoes']['start_time']] = entry;
-                            });
-
-                        if (local_tick['less50'] != null && local_tick['less50'].length > 0)
-                            local_tick['less50'].forEach(function(entry) {
-                                occs[entry['informacoes']['start_time']] = entry;
-                            });
-                    }
-                }
-            }
-        }
-    }
+    load_json(arg);
 }
 
 function puts(argument) {
+
     console.log(argument);
 }
