@@ -341,10 +341,11 @@ function set_snap_v(index) {
     
     for (var i = 0; i < 5; i++) {
         var a = tmp['bid_price_' + i];
-        var b = tmp['bid_quantity_' + i];
+        
         var c = tmp['ask_price_' + i];
         var d = tmp['ask_quantity_' + i];
-
+        var b = tmp['bid_quantity_' + i];
+        
         soma_l += b;
         soma_r += d;
         $("#" + ticks + "_ticks td#snap_" + index + "_" + i + "0").html(b);
