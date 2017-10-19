@@ -392,11 +392,11 @@ function snapshots_v() {
 function vwap_status(vwap) {
     if (data['side'] == "C")
         if (vwap >= data['paddi'])
-            return "A favor";
-        else
             return "Contra";
+        else
+            return "A favor";
     else 
-        if (vwap < data['paddi'])
+        if (vwap >= data['paddi'])
             return "A favor";
         else
             return "Contra";
@@ -404,6 +404,51 @@ function vwap_status(vwap) {
 
 function percent(arg){
     return ((arg * 100) / data['qaddw']).toFixed(2) ;
+}
+
+function get_ofi(index) {
+    var tmp;
+    switch (index) {
+        case 1:
+            tmp = snap_1_shot;
+            break;
+        case 2:
+            tmp = snap_2_shot;
+            break;
+        case 3:
+            tmp = snap_3_shot;
+            break;
+        case 4:
+            tmp = snap_4_shot;
+            break;
+        case 5:
+            tmp = snap_5_shot;
+            break;
+        case 6:
+            tmp = snap_6_shot;
+            break;
+        case 7:
+            tmp = snap_7_shot;
+            break;
+    }
+    var soma_l = 0;
+    var soma_r = 0;
+    
+    for (var i = 0; i < 5; i++) {
+        var a = tmp['bid_price_' + i];
+        
+        var c = tmp['ask_price_' + i];
+        var d = tmp['ask_quantity_' + i];
+        var b = tmp['bid_quantity_' + i];
+        
+        soma_l += b;
+        soma_r += d;
+    }
+
+    if(data['side'] == 'C')
+        return soma_l - soma_r;
+    return soma_r - soma_l;
+
 }
 
 function table_of_analisys() {
@@ -426,12 +471,12 @@ function table_of_analisys() {
     $("#" + ticks + "_ticks td#tem_buraco_6").html("??");
 
     //Qual o OFI (QADD - Outro lado)
-    $("#" + ticks + "_ticks td#ofi_0").html(break_str(0,snap_1['ofi']));
-    $("#" + ticks + "_ticks td#ofi_1").html(break_str(0,snap_2['ofi']));
-    $("#" + ticks + "_ticks td#ofi_2").html(break_str(0,snap_3['ofi']));
-    $("#" + ticks + "_ticks td#ofi_3").html(break_str(0,snap_4['ofi']));
-    $("#" + ticks + "_ticks td#ofi_4").html(break_str(0,snap_5['ofi']));
-    $("#" + ticks + "_ticks td#ofi_5").html(break_str(0,snap_6['ofi']));
+    $("#" + ticks + "_ticks td#ofi_0").html(get_ofi(1));
+    $("#" + ticks + "_ticks td#ofi_1").html(get_ofi(2));
+    $("#" + ticks + "_ticks td#ofi_2").html(get_ofi(3));
+    $("#" + ticks + "_ticks td#ofi_3").html(get_ofi(4));
+    $("#" + ticks + "_ticks td#ofi_4").html(get_ofi(5));
+    $("#" + ticks + "_ticks td#ofi_5").html(get_ofi(6));
     $("#" + ticks + "_ticks td#ofi_6").html("??");
 
     //Houve DELL no ADD?
@@ -510,6 +555,7 @@ function table_of_analisys() {
     $("#" + ticks + "_ticks td#saldo_4").html(snap_5['acumulado']);
     $("#" + ticks + "_ticks td#saldo_5").html(snap_6['acumulado']);
 }
+
 
 function update() {
 
