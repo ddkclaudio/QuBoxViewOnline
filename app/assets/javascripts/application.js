@@ -875,7 +875,6 @@ function drawChart_dol_bid_ask() {
         // curveType: 'function',
 
         vAxis: {
-            maxValue: 10,
             fontSize: 13, // or the number you want
             title: 'temps (ms)',
             viewWindowMode: 'explicit',
