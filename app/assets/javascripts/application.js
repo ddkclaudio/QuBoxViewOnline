@@ -781,7 +781,6 @@ function drawChart() {
         // curveType: 'function',
 
         vAxis: {
-            maxValue: 10,
             fontSize: 13, // or the number you want
             title: 'temps (ms)',
             viewWindowMode: 'explicit',
