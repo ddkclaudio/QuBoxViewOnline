@@ -1,30 +1,39 @@
 class CreateSnapshots < ActiveRecord::Migration
   def change
-    create_table :snapshots do |t|
-      t.integer :number_of_snapshot
-      t.integer :qaddw_dell
-      t.integer :qaddw_change
-      t.integer :qaddw_add
-      t.integer :qaddw_cancel
-      t.integer :qaddsw_dell
-      t.integer :qaddsw_change
-      t.integer :qaddsw_add
-      t.integer :qaddsw_cancel
-      t.integer :qadd_dell
-      t.integer :qadd_change
-      t.integer :qadd_add
-      t.integer :qadd_cancel
-      t.float :vwap
-      t.float :rps
-      t.text :frequencia
-      t.integer :tinha_buraco
-      t.float :acumulado
-      t.integer :delete_no_add
-      t.integer :teve_iceberg
-      t.integer :teve_add_secundario
-      t.float :preco
-      t.text :ofi
-      t.integer :id_mbp
+    create_table  :snapshots do |t|
+      t.integer   :number_of_snapshot
+      t.integer   :qaddw_dell
+      t.integer   :qaddw_change
+      t.integer   :qaddw_add
+      t.integer   :qaddw_cancel
+      t.integer   :qaddsw_dell
+      t.integer   :qaddsw_change
+      t.integer   :qaddsw_add
+      t.integer   :qaddsw_cancel
+      t.integer   :qadd_dell
+      t.integer   :qadd_change
+      t.integer   :qadd_add
+      t.integer   :qadd_cancel
+      t.float     :vwap
+      t.float     :rps
+      t.text      :frequencia
+      t.integer   :tinha_buraco
+      t.float     :acumulado
+      t.integer   :delete_no_add
+      t.integer   :teve_iceberg
+      t.integer   :teve_add_secundario
+      t.float     :preco_bid
+      t.float     :preco_ask
+      t.text      :ofi
+      t.integer   :id_mbp
+      
+      t.integer   :qadd_total
+      t.integer   :qadd_saldo
+      t.integer   :qaddw_total
+      t.integer   :qaddw_saldo
+      t.integer   :qaddsw_total
+      t.integer   :qaddsw_saldo
+      
 
       t.timestamps null: true
     end

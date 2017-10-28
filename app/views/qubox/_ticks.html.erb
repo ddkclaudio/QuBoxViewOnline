@@ -56,25 +56,35 @@
    <table class="mdl-data-table  mdl-data-table--selectable mdl-shadow--2dp mdl-cell mdl-cell--1-col">
       <thead>
          <tr>
-            <th class='border'>Frequência Máxima</th>
+            
             <th class='border'>Frequência Mínima</th>
+            <th class='border'>Frequência Máxima</th>
          </tr>
       </thead>
       <tbody>
          <tr>
-            <td id='frequencia_max'  class='border'> xxxx </td>
             <td id='frequencia_min' class='border' > xxxx </td>
+            <td id='frequencia_max'  class='border'> xxxx </td>
          </tr>
       </tbody>
    </table>
    <h5 class="mdl-cell mdl-cell--12-col" style="margin:15px"> </h5>
    <div id='segundos_sim'>
       <%= render :partial => "spreadzerado" ,locals:{disp: 2}%>
+      
    </div>
+   
+   <h5 class="mdl-cell mdl-cell--12-col box" >Evolução nos snapshots:</h5>
+   <%= render :partial => "tabela_evolucao" ,locals:{qaddx: "QADD"}%>
+   <%= render :partial => "tabela_evolucao" ,locals:{qaddx: "QADDW"}%>
+   
+   
    
    <div id="remotion_chart_<%= i %>" style="width: 200%; height: 500px;margin-left: -100px;"></div>
    
    <div id="rps_chart_<%= i %>" style="width: 200%; height: 500px;margin-left: -100px;"></div>
+   
+   <div id="dol_bid_ask_chart_<%= i %>" style="width: 200%; height: 500px;margin-left: -100px;"></div>
    
    <!--Resultados estatísticos-->
    <h5 class="mdl-cell mdl-cell--12-col box">Resultados estatísticos</h5>

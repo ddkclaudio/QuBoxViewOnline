@@ -54,9 +54,9 @@ function informacoes() {
     $("#" + ticks + "_ticks #paddf      ").html(data['paddf'])
     $("#" + ticks + "_ticks #x          ").html(data['x'])
     $("#" + ticks + "_ticks #paddw      ").html(data['paddw'])
-    $("#" + ticks + "_ticks #qaddw      ").html(data['qaddw'])
+    $("#" + ticks + "_ticks #qaddw      ").html(data['qaddw'] > 0 ? data['qaddw'] : "Não atingido")
     $("#" + ticks + "_ticks #paddsw     ").html(data['paddsw'])
-    $("#" + ticks + "_ticks #qaddsw     ").html(data['qaddsw'])
+    $("#" + ticks + "_ticks #qaddsw     ").html(data['qaddsw'] > 0 ? data['qaddsw'] : "Não atingido")
     $("#" + ticks + "_ticks #end_time   ").html(data['end_time'].split(' ')[1])
     $("#" + ticks + "_ticks #vwap       ").html(snap_1['vwap'])
     $("#" + ticks + "_ticks #RPS_INFO   ").html(snap_1['rps'])
@@ -177,32 +177,51 @@ function disp_risk_v() {
 function spreadZeradoGeral(segundos, local, side) {
 
     var qaddw           = data['qaddw'];
-    var qaddw_dc        = snap_2['qaddw_dell'] + snap_2['qaddw_change'];
+    var qaddw_d         = snap_2['qaddw_dell'];
+    var qaddw_c         = snap_2['qaddw_change'];
     var qaddw_add       = snap_2['qaddw_add'];
-    var qaddw_dccanc    = snap_2['qaddw_cancel'] + qaddw_dc;
-
-    var qaddsw          = data['qaddsw'];
-    var qaddsw_dc       = snap_2['qaddsw_dell'] + snap_2['qaddsw_change'];
-    var qaddsw_add      = snap_2['qaddsw_add'];
-    var qaddsw_dccanc   = snap_2['qaddsw_cancel'] + qaddsw_dc;
+    var qaddw_canc      = snap_2['qaddw_cancel'];
 
     // SPREAD ZERADO QADDW
     $("#" + ticks + "_ticks #" + segundos + " #sz_paddw                     ").html(data['paddw']);
     $("#" + ticks + "_ticks #" + segundos + " #sz_qaddw                     ").html(qaddw);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddw            ").html(qaddw_dc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddw           ").html(qaddw_dccanc - qaddw_dc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddw            ").html(qaddw_d + qaddw_c);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddw           ").html(qaddw_canc);
     $("#" + ticks + "_ticks #" + segundos + " #sz_adicionado_qaddw          ").html(qaddw_add);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddw         ").html(qaddw_dccanc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddw    ").html(qaddw_dc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_calculo                   ").html(data['paddw_calculo']);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_financeiro                ").html(data['paddw_financeiro']);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddw         ").html(qaddw_d + qaddw_c + qaddw_canc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddw    ").html(qaddw_d + qaddw_c);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_calculo                   ").html(data['paddw_calculo_plus']);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_financeiro                ").html(data['paddw_financeiro_plus']);
+    
+    var qaddsw           = data['qaddsw'];
+    var qaddsw_d         = snap_2['qaddsw_dell'];
+    var qaddsw_c         = snap_2['qaddsw_change'];
+    var qaddsw_add       = snap_2['qaddsw_add'];
+    var qaddsw_canc      = snap_2['qaddsw_cancel'];
+    
     $("#" + ticks + "_ticks #" + segundos + " #sz_paddsw                    ").html(data['paddsw']);
     $("#" + ticks + "_ticks #" + segundos + " #sz_qaddsw                    ").html(qaddsw);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddsw           ").html(qaddsw_dc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddsw          ").html(qaddsw_dccanc - qaddsw_dc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_removido_qaddsw           ").html(qaddsw_d + qaddsw_c);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_cancelado_qaddsw          ").html(qaddsw_canc);
     $("#" + ticks + "_ticks #" + segundos + " #sz_adicionado_qaddsw         ").html(qaddsw_add);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddsw        ").html(qaddsw_dccanc);
-    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddsw   ").html(qaddsw_dc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_qaddsw        ").html(qaddsw_d + qaddsw_c + qaddsw_canc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_porcentagem_real_qaddsw   ").html(qaddsw_d + qaddsw_c);
+    
+    var qadd           = data['qadd'];
+    var qadd_d         = snap_2['qadd_dell'];
+    var qadd_c         = snap_2['qadd_change'];
+    var qadd_add       = snap_2['qadd_add'];
+    var qadd_canc      = snap_2['qadd_cancel'];
+    
+    $("#" + ticks + "_ticks #" + segundos + " #sz_padd").html(data['paddi']);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qadd").html(qadd);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qadd_add").html(qadd_add);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qadd_delete").html(qadd_d);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qadd_change").html(qadd_c);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qadd_cancel").html(qadd_canc);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qadd_dc").html(qadd_d + qadd_c);
+    $("#" + ticks + "_ticks #" + segundos + " #sz_qadd_dcc").html(qadd_d + qadd_c + qadd_canc);
+    
 
     if (data['paddsw_lucro'] == 1)
         $("#" + ticks + "_ticks #" + segundos + " #sz_teria_lucro ").html("Sim");
@@ -226,32 +245,50 @@ function spreadZerado3Segundos() {
     $("#" + ticks + "_ticks #frequencia_max ").html(break_str(1,snap_6['frequencia']));
 
     var qaddw           = data['qaddw'];
-    var qaddw_dc        = (1 * snap_6['qaddw_dell']) + (1 * snap_6['qaddw_change']);
+    var qaddw_d         = snap_6['qaddw_dell'];
+    var qaddw_c         = snap_6['qaddw_change'];
     var qaddw_add       = snap_6['qaddw_add'];
-    var qaddw_dccanc    = snap_6['qaddw_cancel'] + qaddw_dc;
-
-    var qaddsw          = data['qaddsw'];
-    var qaddsw_dc       = snap_6['qaddsw_dell'] + snap_6['qaddsw_change'];
-    var qaddsw_add      = snap_6['qaddsw_add'];
-    var qaddsw_dccanc   = snap_6['qaddsw_cancel'] + qaddsw_dc;
+    var qaddw_canc      = snap_6['qaddw_cancel'];
 
     // SPREAD ZERADO QADDW
     $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_paddw                     ").html(data['paddw']);
     $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qaddw                     ").html(qaddw);
-    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_removido_qaddw            ").html(qaddw_dc);
-    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_cancelado_qaddw           ").html(qaddw_dccanc - qaddw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_removido_qaddw            ").html(qaddw_d + qaddw_c);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_cancelado_qaddw           ").html(qaddw_canc);
     $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_adicionado_qaddw          ").html(qaddw_add);
-    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_qaddw         ").html(qaddw_dccanc);
-    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_real_qaddw    ").html(qaddw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_qaddw         ").html(qaddw_d + qaddw_c + qaddw_canc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_real_qaddw    ").html(qaddw_d + qaddw_c);
     $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_calculo                   ").html(data['paddw_calculo_plus']);
     $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_financeiro                ").html(data['paddw_financeiro_plus']);
+    
+    var qaddsw           = data['qaddsw'];
+    var qaddsw_d         = snap_6['qaddsw_dell'];
+    var qaddsw_c         = snap_6['qaddsw_change'];
+    var qaddsw_add       = snap_6['qaddsw_add'];
+    var qaddsw_canc      = snap_6['qaddsw_cancel'];
+    
     $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_paddsw                    ").html(data['paddsw']);
     $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qaddsw                    ").html(qaddsw);
-    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_removido_qaddsw           ").html(qaddsw_dc);
-    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_cancelado_qaddsw          ").html(qaddsw_dccanc - qaddsw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_removido_qaddsw           ").html(qaddsw_d + qaddsw_c);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_cancelado_qaddsw          ").html(qaddsw_canc);
     $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_adicionado_qaddsw         ").html(qaddsw_add);
-    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_qaddsw        ").html(qaddsw_dccanc);
-    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_real_qaddsw   ").html(qaddsw_dc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_qaddsw        ").html(qaddsw_d + qaddsw_c + qaddsw_canc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_porcentagem_real_qaddsw   ").html(qaddsw_d + qaddsw_c);
+    
+    var qadd           = data['qadd'];
+    var qadd_d         = snap_6['qadd_dell'];
+    var qadd_c         = snap_6['qadd_change'];
+    var qadd_add       = snap_6['qadd_add'];
+    var qadd_canc      = snap_6['qadd_cancel'];
+    
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_padd").html(data['paddi']);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qadd").html(qadd);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qadd_add").html(qadd_add);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qadd_delete").html(qadd_d);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qadd_change").html(qadd_c);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qadd_cancel").html(qadd_canc);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qadd_dc").html(qadd_d + qadd_c);
+    $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_qadd_dcc").html(qadd_d + qadd_c + qadd_canc);
 
     if (data['paddsw_lucro_plus'])
         $("#" + ticks + "_ticks #" + 'segundos_sim' + " #sz_teria_lucro ").html("Sim");
@@ -334,11 +371,13 @@ function set_snap_v(index) {
             break;
         case 7:
             tmp = snap_7_shot;
+            puts("===== 7");
             break;
     }
     var soma_l = 0;
     var soma_r = 0;
     
+    if( (index == 7 && tmp != null) || index == 1 || index == 2 || index == 3 || index == 4 || index == 5 || index == 6 )
     for (var i = 0; i < 5; i++) {
         var a = tmp['bid_price_' + i];
         
@@ -451,6 +490,97 @@ function get_ofi(index) {
 
 }
 
+function table_of_snapshots() {
+	
+    $("#" + ticks + "_ticks #qadd_dell_1")	.html(snap_1['qadd_dell']);
+    $("#" + ticks + "_ticks #qadd_change_1").html(snap_1['qadd_change']);
+    $("#" + ticks + "_ticks #qadd_add_1")	.html(snap_1['qadd_add']);
+    $("#" + ticks + "_ticks #qadd_cancel_1").html(snap_1['qadd_cancel']);
+    $("#" + ticks + "_ticks #qadd_total_1")	.html(snap_1['qadd_total']);
+    $("#" + ticks + "_ticks #qadd_saldo_1")	.html(snap_1['qadd_saldo']);
+	
+    $("#" + ticks + "_ticks #qadd_dell_2")	.html(snap_2['qadd_dell']);
+    $("#" + ticks + "_ticks #qadd_change_2").html(snap_2['qadd_change']);
+    $("#" + ticks + "_ticks #qadd_add_2")	.html(snap_2['qadd_add']);
+    $("#" + ticks + "_ticks #qadd_cancel_2").html(snap_2['qadd_cancel']);
+    $("#" + ticks + "_ticks #qadd_total_2")	.html(snap_2['qadd_total']);
+    $("#" + ticks + "_ticks #qadd_saldo_2")	.html(snap_2['qadd_saldo']);
+	
+    $("#" + ticks + "_ticks #qadd_dell_3")	.html(snap_3['qadd_dell']);
+    $("#" + ticks + "_ticks #qadd_change_3").html(snap_3['qadd_change']);
+    $("#" + ticks + "_ticks #qadd_add_3")	.html(snap_3['qadd_add']);
+    $("#" + ticks + "_ticks #qadd_cancel_3").html(snap_3['qadd_cancel']);
+    $("#" + ticks + "_ticks #qadd_total_3")	.html(snap_3['qadd_total']);
+    $("#" + ticks + "_ticks #qadd_saldo_3")	.html(snap_3['qadd_saldo']);
+	
+    $("#" + ticks + "_ticks #qadd_dell_4")	.html(snap_4['qadd_dell']);
+    $("#" + ticks + "_ticks #qadd_change_4").html(snap_4['qadd_change']);
+    $("#" + ticks + "_ticks #qadd_add_4")	.html(snap_4['qadd_add']);
+    $("#" + ticks + "_ticks #qadd_cancel_4").html(snap_4['qadd_cancel']);
+    $("#" + ticks + "_ticks #qadd_total_4")	.html(snap_4['qadd_total']);
+    $("#" + ticks + "_ticks #qadd_saldo_4")	.html(snap_4['qadd_saldo']);
+	
+    $("#" + ticks + "_ticks #qadd_dell_5")	.html(snap_5['qadd_dell']);
+    $("#" + ticks + "_ticks #qadd_change_5").html(snap_5['qadd_change']);
+    $("#" + ticks + "_ticks #qadd_add_5")	.html(snap_5['qadd_add']);
+    $("#" + ticks + "_ticks #qadd_cancel_5").html(snap_5['qadd_cancel']);
+    $("#" + ticks + "_ticks #qadd_total_5")	.html(snap_5['qadd_total']);
+    $("#" + ticks + "_ticks #qadd_saldo_5")	.html(snap_5['qadd_saldo']);
+	
+    $("#" + ticks + "_ticks #qadd_dell_6")	.html(snap_6['qadd_dell']);
+    $("#" + ticks + "_ticks #qadd_change_6").html(snap_6['qadd_change']);
+    $("#" + ticks + "_ticks #qadd_add_6")	.html(snap_6['qadd_add']);
+    $("#" + ticks + "_ticks #qadd_cancel_6").html(snap_6['qadd_cancel']);
+    $("#" + ticks + "_ticks #qadd_total_6")	.html(snap_6['qadd_total']);
+    $("#" + ticks + "_ticks #qadd_saldo_6")	.html(snap_6['qadd_saldo']);
+    
+    //==================
+    
+    
+    $("#" + ticks + "_ticks #qaddw_dell_1")	.html(snap_1['qaddw_dell']);
+    $("#" + ticks + "_ticks #qaddw_change_1").html(snap_1['qaddw_change']);
+    $("#" + ticks + "_ticks #qaddw_add_1")	.html(snap_1['qaddw_add']);
+    $("#" + ticks + "_ticks #qaddw_cancel_1").html(snap_1['qaddw_cancel']);
+    $("#" + ticks + "_ticks #qaddw_total_1")	.html(snap_1['qaddw_total']);
+    $("#" + ticks + "_ticks #qaddw_saldo_1")	.html(snap_1['qaddw_saldo']);
+	
+    $("#" + ticks + "_ticks #qaddw_dell_2")	.html(snap_2['qaddw_dell']);
+    $("#" + ticks + "_ticks #qaddw_change_2").html(snap_2['qaddw_change']);
+    $("#" + ticks + "_ticks #qaddw_add_2")	.html(snap_2['qaddw_add']);
+    $("#" + ticks + "_ticks #qaddw_cancel_2").html(snap_2['qaddw_cancel']);
+    $("#" + ticks + "_ticks #qaddw_total_2")	.html(snap_2['qaddw_total']);
+    $("#" + ticks + "_ticks #qaddw_saldo_2")	.html(snap_2['qaddw_saldo']);
+	
+    $("#" + ticks + "_ticks #qaddw_dell_3")	.html(snap_3['qaddw_dell']);
+    $("#" + ticks + "_ticks #qaddw_change_3").html(snap_3['qaddw_change']);
+    $("#" + ticks + "_ticks #qaddw_add_3")	.html(snap_3['qaddw_add']);
+    $("#" + ticks + "_ticks #qaddw_cancel_3").html(snap_3['qaddw_cancel']);
+    $("#" + ticks + "_ticks #qaddw_total_3")	.html(snap_3['qaddw_total']);
+    $("#" + ticks + "_ticks #qaddw_saldo_3")	.html(snap_3['qaddw_saldo']);
+	
+    $("#" + ticks + "_ticks #qaddw_dell_4")	.html(snap_4['qaddw_dell']);
+    $("#" + ticks + "_ticks #qaddw_change_4").html(snap_4['qaddw_change']);
+    $("#" + ticks + "_ticks #qaddw_add_4")	.html(snap_4['qaddw_add']);
+    $("#" + ticks + "_ticks #qaddw_cancel_4").html(snap_4['qaddw_cancel']);
+    $("#" + ticks + "_ticks #qaddw_total_4")	.html(snap_4['qaddw_total']);
+    $("#" + ticks + "_ticks #qaddw_saldo_4")	.html(snap_4['qaddw_saldo']);
+	
+    $("#" + ticks + "_ticks #qaddw_dell_5")	.html(snap_5['qaddw_dell']);
+    $("#" + ticks + "_ticks #qaddw_change_5").html(snap_5['qaddw_change']);
+    $("#" + ticks + "_ticks #qaddw_add_5")	.html(snap_5['qaddw_add']);
+    $("#" + ticks + "_ticks #qaddw_cancel_5").html(snap_5['qaddw_cancel']);
+    $("#" + ticks + "_ticks #qaddw_total_5")	.html(snap_5['qaddw_total']);
+    $("#" + ticks + "_ticks #qaddw_saldo_5")	.html(snap_5['qaddw_saldo']);
+	
+    $("#" + ticks + "_ticks #qaddw_dell_6")	.html(snap_6['qaddw_dell']);
+    $("#" + ticks + "_ticks #qaddw_change_6").html(snap_6['qaddw_change']);
+    $("#" + ticks + "_ticks #qaddw_add_6")	.html(snap_6['qaddw_add']);
+    $("#" + ticks + "_ticks #qaddw_cancel_6").html(snap_6['qaddw_cancel']);
+    $("#" + ticks + "_ticks #qaddw_total_6")	.html(snap_6['qaddw_total']);
+    $("#" + ticks + "_ticks #qaddw_saldo_6")	.html(snap_6['qaddw_saldo']);
+
+    
+}
 function table_of_analisys() {
     //Porcentagem removida no QADDW/WDO:
     $("#" + ticks + "_ticks td#pqaddw_1").html(percent(snap_2['qaddw_dell'] + snap_2['qaddw_change']));
@@ -462,12 +592,12 @@ function table_of_analisys() {
 
 
     //Tinha buraco no book na hora do ADD?
-    $("#" + ticks + "_ticks td#tem_buraco_0").html(snap_1['tinha_buraco']);
-    $("#" + ticks + "_ticks td#tem_buraco_1").html(snap_2['tinha_buraco']);
-    $("#" + ticks + "_ticks td#tem_buraco_2").html(snap_3['tinha_buraco']);
-    $("#" + ticks + "_ticks td#tem_buraco_3").html(snap_4['tinha_buraco']);
-    $("#" + ticks + "_ticks td#tem_buraco_4").html(snap_5['tinha_buraco']);
-    $("#" + ticks + "_ticks td#tem_buraco_5").html(snap_6['tinha_buraco']);
+    $("#" + ticks + "_ticks td#tem_buraco_0").html(snap_1['tinha_buraco'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#tem_buraco_1").html(snap_2['tinha_buraco'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#tem_buraco_2").html(snap_3['tinha_buraco'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#tem_buraco_3").html(snap_4['tinha_buraco'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#tem_buraco_4").html(snap_5['tinha_buraco'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#tem_buraco_5").html(snap_6['tinha_buraco'] > 0 ? "Sim" : "Não");
     $("#" + ticks + "_ticks td#tem_buraco_6").html("??");
 
     //Qual o OFI (QADD - Outro lado)
@@ -483,45 +613,39 @@ function table_of_analisys() {
     var last = 0
     var diff = 0
 
-    diff = snap_1['qadd_dell'] - last
-    last = snap_1['qadd_dell']
+    diff = snap_1['delete_no_add'] 
     $("#" + ticks + "_ticks td#dell_add_0").html(diff > 0 ? "Sim" : "Não");
 
-    diff = snap_2['qadd_dell'] - last
-    last = snap_2['qadd_dell']
+    diff = snap_2['delete_no_add']
     $("#" + ticks + "_ticks td#dell_add_1").html(diff > 0 ? "Sim" : "Não");
 
-    diff = snap_3['qadd_dell'] - last
-    last = snap_3['qadd_dell']
+    diff = snap_3['delete_no_add']
     $("#" + ticks + "_ticks td#dell_add_2").html(diff > 0 ? "Sim" : "Não");
 
-    diff = snap_4['qadd_dell'] - last
-    last = snap_4['qadd_dell']
+    diff = snap_4['delete_no_add'] 
     $("#" + ticks + "_ticks td#dell_add_3").html(diff > 0 ? "Sim" : "Não");
 
-    diff = snap_5['qadd_dell'] - last
-    last = snap_5['qadd_dell']
+    diff = snap_5['delete_no_add'] 
     $("#" + ticks + "_ticks td#dell_add_4").html(diff > 0 ? "Sim" : "Não");
 
-    diff = snap_6['qadd_dell'] - last
-    last = snap_6['qadd_dell']
+    diff = snap_6['delete_no_add']
     $("#" + ticks + "_ticks td#dell_add_5").html(diff > 0 ? "Sim" : "Não");
 
     //Teve iceberg após o DELL?
-    $("#" + ticks + "_ticks td#iceberg_0").html(snap_1['teve_iceberg']);
-    $("#" + ticks + "_ticks td#iceberg_1").html(snap_2['teve_iceberg']);
-    $("#" + ticks + "_ticks td#iceberg_2").html(snap_3['teve_iceberg']);
-    $("#" + ticks + "_ticks td#iceberg_3").html(snap_4['teve_iceberg']);
-    $("#" + ticks + "_ticks td#iceberg_4").html(snap_5['teve_iceberg']);
-    $("#" + ticks + "_ticks td#iceberg_5").html(snap_6['teve_iceberg']);
+    $("#" + ticks + "_ticks td#iceberg_0").html(snap_1['teve_iceberg'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#iceberg_1").html(snap_2['teve_iceberg'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#iceberg_2").html(snap_3['teve_iceberg'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#iceberg_3").html(snap_4['teve_iceberg'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#iceberg_4").html(snap_5['teve_iceberg'] > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#iceberg_5").html(snap_6['teve_iceberg'] > 0 ? "Sim" : "Não");
 
     //Teve ADD secundário após o DELL?
-    $("#" + ticks + "_ticks td#add_secundario_0").html(snap_1['teve_add_secundario'])
-    $("#" + ticks + "_ticks td#add_secundario_1").html(snap_2['teve_add_secundario'])
-    $("#" + ticks + "_ticks td#add_secundario_2").html(snap_3['teve_add_secundario'])
-    $("#" + ticks + "_ticks td#add_secundario_3").html(snap_4['teve_add_secundario'])
-    $("#" + ticks + "_ticks td#add_secundario_4").html(snap_5['teve_add_secundario'])
-    $("#" + ticks + "_ticks td#add_secundario_5").html(snap_6['teve_add_secundario'])
+    $("#" + ticks + "_ticks td#add_secundario_0").html(snap_1['teve_add_secundario'] > 0 ? "Sim" : "Não")
+    $("#" + ticks + "_ticks td#add_secundario_1").html(snap_2['teve_add_secundario'] > 0 ? "Sim" : "Não")
+    $("#" + ticks + "_ticks td#add_secundario_2").html(snap_3['teve_add_secundario'] > 0 ? "Sim" : "Não")
+    $("#" + ticks + "_ticks td#add_secundario_3").html(snap_4['teve_add_secundario'] > 0 ? "Sim" : "Não")
+    $("#" + ticks + "_ticks td#add_secundario_4").html(snap_5['teve_add_secundario'] > 0 ? "Sim" : "Não")
+    $("#" + ticks + "_ticks td#add_secundario_5").html(snap_6['teve_add_secundario'] > 0 ? "Sim" : "Não")
 
     //O evento estava a favor ou contra o VWAP?
     $("#" + ticks + "_ticks td#vwap_0").html(vwap_status(snap_1['vwap']));
@@ -554,8 +678,12 @@ function table_of_analisys() {
     $("#" + ticks + "_ticks td#saldo_3").html(snap_4['acumulado']);
     $("#" + ticks + "_ticks td#saldo_4").html(snap_5['acumulado']);
     $("#" + ticks + "_ticks td#saldo_5").html(snap_6['acumulado']);
+    
+    
+    
+    
+    
 }
-
 
 function update() {
 
@@ -570,10 +698,12 @@ function update() {
     }
 
     table_of_analisys();
+    table_of_snapshots();
     spreadZeradoGeral('segundos_nao', 'Spread_zerado', 1);
     spreadZerado3Segundos();
     drawChart();
     drawChart_rps();
+    drawChart_dol_bid_ask();
 }
 
 function getLabel(arg) {
@@ -610,34 +740,36 @@ function drawChart() {
     data_google.addColumn('number', 'Qaddw');
     data_google.addColumn('number', 'QaddwC');
     
-    var a = data['qadd']  + snap_1['qadd_add'] -(snap_1['qadd_dell']  + snap_1['qadd_change']);
-    var b = data['qaddw'] + snap_1['qaddw_add'] -(snap_1['qaddw_dell'] + snap_1['qaddw_change']);
-    var c = data['qaddw'] + snap_1['qaddw_add'] -(snap_1['qaddw_dell'] + snap_1['qaddw_change'] + snap_1['qaddw_cancel']);
+    
+    
+    var a = snap_1['qadd_saldo'];
+    var b = data['qaddw'] - ((snap_1['qaddw_dell'] + snap_1['qaddw_change']) - snap_1['qaddw_add']) ;
+    var c = snap_1['qaddw_saldo'];
     data_google.addRow([getLabel('snap_1'), '', '', a, b, c]);
     
-    a = data['qadd']  + snap_2['qadd_add'] - (snap_2['qadd_dell']  + snap_2['qadd_change']);
-    b = data['qaddw'] + snap_2['qaddw_add'] - (snap_2['qaddw_dell'] + snap_2['qaddw_change']);
-    c = data['qaddw'] + snap_2['qaddw_add'] - (snap_2['qaddw_dell'] + snap_2['qaddw_change'] + snap_2['qaddw_cancel']);
+    a = snap_2['qadd_saldo'];
+    b = data['qaddw'] - ((snap_2['qaddw_dell'] + snap_2['qaddw_change']) - snap_2['qaddw_add']) ;
+    c = snap_2['qaddw_saldo'];
     data_google.addRow([getLabel('snap_2'), '', '', a, b, c]);
     
-    a = data['qadd']  + snap_3['qadd_add'] - (snap_3['qadd_dell']  + snap_3['qadd_change']);
-    b = data['qaddw'] + snap_3['qaddw_add'] - (snap_3['qaddw_dell'] + snap_3['qaddw_change']);
-    c = data['qaddw'] + snap_3['qaddw_add'] - (snap_3['qaddw_dell'] + snap_3['qaddw_change'] + snap_3['qaddw_cancel']);
+    a = snap_3['qadd_saldo'];
+    b = data['qaddw'] - ((snap_3['qaddw_dell'] + snap_3['qaddw_change']) - snap_3['qaddw_add']) ;
+    c = snap_3['qaddw_saldo'];
     data_google.addRow([getLabel('snap_3'), '', '', a, b, c]);
     
-    a = data['qadd']  + snap_4['qadd_add'] - (snap_4['qadd_dell']  + snap_4['qadd_change']);
-    b = data['qaddw'] + snap_4['qaddw_add'] - (snap_4['qaddw_dell'] + snap_4['qaddw_change']);
-    c = data['qaddw'] + snap_4['qaddw_add'] - (snap_4['qaddw_dell'] + snap_4['qaddw_change'] + snap_4['qaddw_cancel']);
+    a = snap_4['qadd_saldo'];
+    b = data['qaddw'] - ((snap_4['qaddw_dell'] + snap_4['qaddw_change']) - snap_4['qaddw_add']) ;
+    c = snap_4['qaddw_saldo'];
     data_google.addRow([getLabel('snap_4'), '', '', a, b, c]);
     
-    a = data['qadd']  + snap_5['qadd_add'] - (snap_5['qadd_dell']  + snap_5['qadd_change']);
-    b = data['qaddw'] + snap_5['qaddw_add'] - (snap_5['qaddw_dell'] + snap_5['qaddw_change']);
-    c = data['qaddw'] + snap_5['qaddw_add'] - (snap_5['qaddw_dell'] + snap_5['qaddw_change'] + snap_5['qaddw_cancel']);
+    a = snap_5['qadd_saldo'];
+    b = data['qaddw'] - ((snap_5['qaddw_dell'] + snap_5['qaddw_change']) - snap_5['qaddw_add']) ;
+    c = snap_5['qaddw_saldo'];
     data_google.addRow([getLabel('snap_5'), '', '', a, b, c]);
     
-    a = data['qadd']  + snap_6['qadd_add'] - (snap_6['qadd_dell']  + snap_6['qadd_change']);
-    b = data['qaddw'] + snap_6['qaddw_add'] - (snap_6['qaddw_dell'] + snap_6['qaddw_change']);
-    c = data['qaddw'] + snap_6['qaddw_add'] - (snap_6['qaddw_dell'] + snap_6['qaddw_change'] + snap_6['qaddw_cancel']);
+    a = snap_6['qadd_saldo'];
+    b = data['qaddw'] - ((snap_6['qaddw_dell'] + snap_6['qaddw_change']) - snap_6['qaddw_add']) ;
+    c = snap_6['qaddw_saldo'];
     data_google.addRow([getLabel('snap_6'), '', '', a, b, c]);
 
 
@@ -707,6 +839,53 @@ function drawChart_rps() {
         hAxis: {
             textStyle: {
                 fontSize: 13 // or the number you want
+            },
+        },
+        annotations: {
+            style: 'line'
+        }
+    });
+}
+
+function drawChart_dol_bid_ask() {
+    // Create and populate the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'x');
+    data.addColumn({
+        type: 'string',
+        role: 'annotation'
+    });
+    data.addColumn({
+        type: 'string',
+        role: 'annotationText'
+    });
+    data.addColumn('number', 'Preço bid');
+    data.addColumn('number', 'Preço ask');
+    
+    data.addRow([getLabel('snap_1'), '', '', snap_1['preco_bid'], snap_1['preco_ask']]);
+    data.addRow([getLabel('snap_2'), '', '', snap_2['preco_bid'], snap_2['preco_ask']]);
+    data.addRow([getLabel('snap_3'), '', '', snap_3['preco_bid'], snap_3['preco_ask']]);
+    data.addRow([getLabel('snap_4'), '', '', snap_4['preco_bid'], snap_4['preco_ask']]);
+    data.addRow([getLabel('snap_5'), '', '', snap_5['preco_bid'], snap_5['preco_ask']]);
+    data.addRow([getLabel('snap_6'), '', '', snap_6['preco_bid'], snap_6['preco_ask']]);
+
+    // Create and draw the visualization.
+    new google.visualization.LineChart(document.getElementById('dol_bid_ask_chart_' + ticks)).
+    draw(data, {
+        // curveType: 'function',
+
+        vAxis: {
+            maxValue: 10,
+            fontSize: 13, // or the number you want
+            title: 'temps (ms)',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+                // max: max(occ['informacoes']['qadd'], occ['informacoes']['qaddw']),
+            }
+        },
+        hAxis: {
+            textStyle: {
+                fontSize: 13
             },
         },
         annotations: {
