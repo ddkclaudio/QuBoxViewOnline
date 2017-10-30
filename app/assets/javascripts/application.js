@@ -614,22 +614,22 @@ function table_of_analisys() {
     var diff = 0
 
     diff = snap_1['delete_no_add'] 
-    $("#" + ticks + "_ticks td#dell_add_0").html(diff > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_0").html( 0 > 0 ? "Sim" : "Não");
 
     diff = snap_2['delete_no_add']
-    $("#" + ticks + "_ticks td#dell_add_1").html(diff > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_1").html(Math.abs(snap_1['qadd_dell'] - snap_2['qadd_dell']) > 0 ? "Sim" : "Não");
 
     diff = snap_3['delete_no_add']
-    $("#" + ticks + "_ticks td#dell_add_2").html(diff > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_2").html(Math.abs(snap_2['qadd_dell'] - snap_3['qadd_dell']) > 0 ? "Sim" : "Não");
 
     diff = snap_4['delete_no_add'] 
-    $("#" + ticks + "_ticks td#dell_add_3").html(diff > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_3").html(Math.abs(snap_3['qadd_dell'] - snap_4['qadd_dell']) > 0 ? "Sim" : "Não");
 
     diff = snap_5['delete_no_add'] 
-    $("#" + ticks + "_ticks td#dell_add_4").html(diff > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_4").html(Math.abs(snap_4['qadd_dell'] - snap_5['qadd_dell']) > 0 ? "Sim" : "Não");
 
     diff = snap_6['delete_no_add']
-    $("#" + ticks + "_ticks td#dell_add_5").html(diff > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_5").html(Math.abs(snap_5['qadd_dell'] - snap_6['qadd_dell']) > 0 ? "Sim" : "Não");
 
     //Teve iceberg após o DELL?
     $("#" + ticks + "_ticks td#iceberg_0").html(snap_1['teve_iceberg'] > 0 ? "Sim" : "Não");
