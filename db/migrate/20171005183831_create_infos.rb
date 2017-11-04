@@ -34,6 +34,7 @@ class CreateInfos < ActiveRecord::Migration
       t.integer :snap_7
       t.integer :ticks
       t.date    :day
+      t.text :book_dol_price
 
       t.timestamps null: true
     end

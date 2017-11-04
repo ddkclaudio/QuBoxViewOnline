@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20171005183831) do
     t.integer  "snap_7"
     t.integer  "ticks"
     t.date     "day"
+    t.text     "book_dol_price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -707,19 +707,21 @@ function update() {
 }
 
 function getLabel(arg) {
-    if (arg == "snap_1")
+    if(arg == 0)
+        return ".";
+    if (arg == "snap_1" || arg == 1)
         return "Momento do ADD";
-    if (arg == "snap_2")
+    if (arg == "snap_2" || arg == 2)
         return "Spread zerado 1ª linha";
-    if (arg == "snap_3")
+    if (arg == "snap_3" || arg == 3)
         return "Spread zerado ultima linha";
-    if (arg == "snap_4")
+    if (arg == "snap_4" || arg == 4)
         return "+1s";
-    if (arg == "snap_5")
+    if (arg == "snap_5" || arg == 5)
         return "+2s";
-    if (arg == "snap_6")
+    if (arg == "snap_6" || arg == 6)
         return "+3s";
-    if (arg == "snap_7")
+    if (arg == "snap_7" || arg == 7)
         return "Houve dell no qadd"
     return "erro: getLabel(arg)"
 }
@@ -847,30 +849,33 @@ function drawChart_rps() {
 }
 
 function drawChart_dol_bid_ask() {
-    // Create and populate the data table.
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'x');
-    data.addColumn({
+    // Create and populate the gooo table.
+    var gooo = new google.visualization.DataTable();
+    gooo.addColumn('string', 'x');
+    gooo.addColumn({
         type: 'string',
         role: 'annotation'
     });
-    data.addColumn({
+    gooo.addColumn({
         type: 'string',
         role: 'annotationText'
     });
-    data.addColumn('number', 'Preço bid');
-    data.addColumn('number', 'Preço ask');
+    gooo.addColumn('number', 'Preço bid');
+    gooo.addColumn('number', 'Preço ask');
     
-    data.addRow([getLabel('snap_1'), '', '', snap_1['preco_bid'], snap_1['preco_ask']]);
-    data.addRow([getLabel('snap_2'), '', '', snap_2['preco_bid'], snap_2['preco_ask']]);
-    data.addRow([getLabel('snap_3'), '', '', snap_3['preco_bid'], snap_3['preco_ask']]);
-    data.addRow([getLabel('snap_4'), '', '', snap_4['preco_bid'], snap_4['preco_ask']]);
-    data.addRow([getLabel('snap_5'), '', '', snap_5['preco_bid'], snap_5['preco_ask']]);
-    data.addRow([getLabel('snap_6'), '', '', snap_6['preco_bid'], snap_6['preco_ask']]);
+    var book_dol_price = data['book_dol_price'].split(";");
+    
+    book_dol_price.forEach(function(entry) {
+        entry = entry.split(" ");
+        
+        gooo.addRow([getLabel(entry[2]), '', '',entry[0] * 1, entry[1] * 1 ]);
+    });
+    
+    
 
     // Create and draw the visualization.
     new google.visualization.LineChart(document.getElementById('dol_bid_ask_chart_' + ticks)).
-    draw(data, {
+    draw(gooo, {
         // curveType: 'function',
 
         vAxis: {
