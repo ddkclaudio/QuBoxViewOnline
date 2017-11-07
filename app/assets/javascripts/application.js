@@ -617,19 +617,19 @@ function table_of_analisys() {
     $("#" + ticks + "_ticks td#dell_add_0").html( 0 > 0 ? "Sim" : "Não");
 
     diff = snap_2['delete_no_add']
-    $("#" + ticks + "_ticks td#dell_add_1").html(Math.abs(snap_1['qadd_dell'] - snap_2['qadd_dell']) > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_1").html(Math.abs(snap_1['qadd_dell'] - snap_2['qadd_dell']) + Math.abs(snap_1['qadd_change'] - snap_2['qadd_change']) > 0 ? "Sim" : "Não");
 
     diff = snap_3['delete_no_add']
-    $("#" + ticks + "_ticks td#dell_add_2").html(Math.abs(snap_2['qadd_dell'] - snap_3['qadd_dell']) > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_2").html(Math.abs(snap_2['qadd_dell'] - snap_3['qadd_dell']) + Math.abs(snap_2['qadd_change'] - snap_3['qadd_change']) > 0 ? "Sim" : "Não");
 
     diff = snap_4['delete_no_add'] 
-    $("#" + ticks + "_ticks td#dell_add_3").html(Math.abs(snap_3['qadd_dell'] - snap_4['qadd_dell']) > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_3").html(Math.abs(snap_3['qadd_dell'] - snap_4['qadd_dell']) + Math.abs(snap_3['qadd_change'] - snap_4['qadd_change']) > 0 ? "Sim" : "Não");
 
     diff = snap_5['delete_no_add'] 
-    $("#" + ticks + "_ticks td#dell_add_4").html(Math.abs(snap_4['qadd_dell'] - snap_5['qadd_dell']) > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_4").html(Math.abs(snap_4['qadd_dell'] - snap_5['qadd_dell']) + Math.abs(snap_4['qadd_change'] - snap_5['qadd_change']) > 0 ? "Sim" : "Não");
 
     diff = snap_6['delete_no_add']
-    $("#" + ticks + "_ticks td#dell_add_5").html(Math.abs(snap_5['qadd_dell'] - snap_6['qadd_dell']) > 0 ? "Sim" : "Não");
+    $("#" + ticks + "_ticks td#dell_add_5").html(Math.abs(snap_5['qadd_dell'] - snap_6['qadd_dell']) + Math.abs(snap_5['qadd_change'] - snap_6['qadd_change']) > 0 ? "Sim" : "Não");
 
     //Teve iceberg após o DELL?
     $("#" + ticks + "_ticks td#iceberg_0").html(snap_1['teve_iceberg'] > 0 ? "Sim" : "Não");
@@ -781,7 +781,7 @@ function drawChart() {
     new google.visualization.LineChart(document.getElementById('remotion_chart_' + ticks)).
     draw(data_google, {
         // curveType: 'function',
-
+title: 'Evolução do Qadd e Qaddw',
         vAxis: {
             fontSize: 13, // or the number you want
             title: 'temps (ms)',
@@ -827,7 +827,7 @@ function drawChart_rps() {
     new google.visualization.LineChart(document.getElementById('rps_chart_' + ticks)).
     draw(data, {
         // curveType: 'function',
-
+title: 'Evolução do RPS - DOL',
         vAxis: {
             maxValue: 10,
             fontSize: 13, // or the number you want
@@ -886,6 +886,7 @@ function drawChart_dol_bid_ask() {
                 // max: max(occ['informacoes']['qadd'], occ['informacoes']['qaddw']),
             }
         },
+        title: 'Evolução dos preços - DOL',
         hAxis: {
             textStyle: {
                 fontSize: 13
