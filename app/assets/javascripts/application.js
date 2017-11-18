@@ -371,7 +371,7 @@ function set_snap_v(index) {
             break;
         case 7:
             tmp = snap_7_shot;
-            puts("===== 7");
+            //puts("===== 7");
             break;
     }
     var soma_l = 0;
@@ -739,40 +739,40 @@ function drawChart() {
         role: 'annotationText'
     });
     data_google.addColumn('number', 'Qadd');
+    data_google.addColumn('number', 'Cancelamentos');
     data_google.addColumn('number', 'Qaddw');
-    data_google.addColumn('number', 'QaddwC');
     
     
     
     var a = snap_1['qadd_saldo'];
     var b = data['qaddw'] - ((snap_1['qaddw_dell'] + snap_1['qaddw_change']) - snap_1['qaddw_add']) ;
     var c = snap_1['qaddw_saldo'];
-    data_google.addRow([getLabel('snap_1'), '', '', a, b, c]);
+    data_google.addRow([getLabel('snap_1'), '', '', a, Math.abs(c - b), c]);
     
     a = snap_2['qadd_saldo'];
     b = data['qaddw'] - ((snap_2['qaddw_dell'] + snap_2['qaddw_change']) - snap_2['qaddw_add']) ;
     c = snap_2['qaddw_saldo'];
-    data_google.addRow([getLabel('snap_2'), '', '', a, b, c]);
+    data_google.addRow([getLabel('snap_2'), '', '', a, Math.abs(c - b), c]);
     
     a = snap_3['qadd_saldo'];
     b = data['qaddw'] - ((snap_3['qaddw_dell'] + snap_3['qaddw_change']) - snap_3['qaddw_add']) ;
     c = snap_3['qaddw_saldo'];
-    data_google.addRow([getLabel('snap_3'), '', '', a, b, c]);
+    data_google.addRow([getLabel('snap_3'), '', '', a, Math.abs(c - b), c]);
     
     a = snap_4['qadd_saldo'];
     b = data['qaddw'] - ((snap_4['qaddw_dell'] + snap_4['qaddw_change']) - snap_4['qaddw_add']) ;
     c = snap_4['qaddw_saldo'];
-    data_google.addRow([getLabel('snap_4'), '', '', a, b, c]);
+    data_google.addRow([getLabel('snap_4'), '', '', a, Math.abs(c - b), c]);
     
     a = snap_5['qadd_saldo'];
     b = data['qaddw'] - ((snap_5['qaddw_dell'] + snap_5['qaddw_change']) - snap_5['qaddw_add']) ;
     c = snap_5['qaddw_saldo'];
-    data_google.addRow([getLabel('snap_5'), '', '', a, b, c]);
+    data_google.addRow([getLabel('snap_5'), '', '', a, Math.abs(c - b), c]);
     
     a = snap_6['qadd_saldo'];
     b = data['qaddw'] - ((snap_6['qaddw_dell'] + snap_6['qaddw_change']) - snap_6['qaddw_add']) ;
     c = snap_6['qaddw_saldo'];
-    data_google.addRow([getLabel('snap_6'), '', '', a, b, c]);
+    data_google.addRow([getLabel('snap_6'), '', '', a, Math.abs(c - b), c]);
 
 
 
@@ -1009,3 +1009,7 @@ function puts(argument) {
 
     console.log(argument);
 }
+
+$("#next_select").click(function() {
+    $('#'+ticks+'_select option:selected').next().attr('selected', 'selected');
+});

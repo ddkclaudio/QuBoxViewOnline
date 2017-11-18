@@ -22,7 +22,7 @@
   
    <!--SELECT-->
    <div class="mdl-color--white  mdl-cell mdl-cell--12-col mdl-grid">
-      <select name="select" class="mdl-shadow--2dp"  onchange="select_occ(this.value)">
+      <select name="select" class="mdl-shadow--2dp"  onchange="select_occ(this.value)" id="<%= i %>_select">
          <option value="" disabled selected>ADD < 50 </option>
          
          <% for occ in tick['less50']%>

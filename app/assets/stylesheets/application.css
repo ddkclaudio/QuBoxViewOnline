@@ -46,3 +46,17 @@ td.border{
 .centralize{
 text-align: center;
 }
+
+#next_select{
+    position: fixed;
+    right: 50px;
+    top: 120px;
+    z-index: 9999999999999;
+}
+
+#prev_select{
+    position: fixed;
+    right: 150px;
+    top: 120px;
+    z-index: 9999999999999;
+}
