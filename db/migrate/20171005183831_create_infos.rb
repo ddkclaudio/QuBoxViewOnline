@@ -35,6 +35,7 @@ class CreateInfos < ActiveRecord::Migration
       t.integer :ticks
       t.date    :day
       t.text :book_dol_price
+      t.text :book_dol_qtd
 
       t.timestamps null: true
     end

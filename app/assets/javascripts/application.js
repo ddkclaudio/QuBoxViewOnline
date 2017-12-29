@@ -704,6 +704,8 @@ function update() {
     drawChart();
     drawChart_rps();
     drawChart_dol_bid_ask();
+    drawChart_dol_bid_ask_qtd();
+    main();
 }
 
 function getLabel(arg) {
@@ -773,9 +775,6 @@ function drawChart() {
     b = data['qaddw'] - ((snap_6['qaddw_dell'] + snap_6['qaddw_change']) - snap_6['qaddw_add']) ;
     c = snap_6['qaddw_saldo'];
     data_google.addRow([getLabel('snap_6'), '', '', a, Math.abs(c - b), c]);
-
-
-
 
     // Create and draw the visualization.
     new google.visualization.LineChart(document.getElementById('remotion_chart_' + ticks)).
@@ -887,6 +886,56 @@ function drawChart_dol_bid_ask() {
             }
         },
         title: 'Evolução dos preços - DOL',
+        hAxis: {
+            textStyle: {
+                fontSize: 13
+            },
+        },
+        annotations: {
+            style: 'line'
+        }
+    });
+}
+
+function drawChart_dol_bid_ask_qtd() {
+    // Create and populate the gooo table.
+    var gooo = new google.visualization.DataTable();
+    gooo.addColumn('string', 'x');
+    gooo.addColumn({
+        type: 'string',
+        role: 'annotation'
+    });
+    gooo.addColumn({
+        type: 'string',
+        role: 'annotationText'
+    });
+    gooo.addColumn('number', 'Qtd bid');
+    gooo.addColumn('number', 'Qtd ask');
+    
+    var book_dol_price = data['book_dol_qtd'].split(";");
+    
+    book_dol_price.forEach(function(entry) {
+        entry = entry.split(" ");
+        
+        gooo.addRow([getLabel(entry[2]), '', '',entry[0] * 1, entry[1] * 1 ]);
+    });
+    
+    
+
+    // Create and draw the visualization.
+    new google.visualization.LineChart(document.getElementById('dol_bid_ask_chart_qtd_' + ticks)).
+    draw(gooo, {
+        // curveType: 'function',
+
+        vAxis: {
+            fontSize: 13, // or the number you want
+            title: 'temps (ms)',
+            viewWindowMode: 'explicit',
+            viewWindow: {
+                // max: max(occ['informacoes']['qadd'], occ['informacoes']['qaddw']),
+            }
+        },
+        title: 'Evolução do volume - DOL',
         hAxis: {
             textStyle: {
                 fontSize: 13

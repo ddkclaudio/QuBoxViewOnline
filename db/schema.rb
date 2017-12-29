@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20171005183831) do
     t.integer  "ticks"
     t.date     "day"
     t.text     "book_dol_price"
+    t.text     "book_dol_qtd"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
